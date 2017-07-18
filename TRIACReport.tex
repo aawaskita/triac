@@ -65,7 +65,9 @@ BATAN saat ini tengah berencana membangun reaktor riset baru berbasis HTGR (\tex
   \label{fig:bentukpebble}
 \end{figure} 
 
-Bahan bakar berjenis \textit{pebble} ini memiliki komponen utama yang dalam Gambar \ref{fig:bentukpebble} disebut sebagai \textit{coated particle}. Komposisi elemen pelapis (\textit{coated}) dapat diilustrasikan dalam Gambar \ref{fig:pelapis}. Dalam upaya 
+Bahan bakar berjenis \textit{pebble} ini memiliki komponen utama yang dalam Gambar \ref{fig:bentukpebble} disebut sebagai \textit{coated particle}. Komposisi elemen pelapis (\textit{coated}) dapat diilustrasikan dalam Gambar \ref{fig:pelapis}. Dalam upaya menguasai teknologi reaktor berjenis HTGR melalui pengembangan RDE, salah tugas yang harus dilaksanakan adalah penguasaan analisis kegagalan bahan bakarnya, khususnya ketika terjadi kecelakaan.
+
+Beragam model analisis telah dikembangkan, salah satunya yang dikembangkan oleh Wang \cite{wang2004integrated}. Selain itu, terdapat sebuah model sederhana yang dikembangkan oleh Verfondern dalam PANAMA \cite{VERFONDERN201484}. Pada model tersebut, bahan bakar disebut gagal jika kekuatan lapisan SiC (\textit{Silicon Carbide}) lebih kecil daripada tekanan internal dari lapisan di bawahnya (perhatikan Gambar \ref{fig:pelapis}). Model inilah yang akan diterapkan dalam TRIAC (\textit{TRIso Analysis Code}).
 
 \begin{figure}[h]
   \centering
@@ -94,10 +96,43 @@ Sub rutin ini ditujukan untuk membaca file input dengan format seperti terdapat 
 
 Terdapat empat jenis data yang perlu dibaca dari \textit{file input} dalam Lampiran 1, masing-masing adalah sebagai berikut.
 \begin{enumerate}
-  \item Data tentang geometri \textit{pebble}. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusGeometry} (baris ke-5 pada Listing \ref{triac.py}). Di dalam data geometri, terdapat empat data berbeda, masing-masing secara berurutan adalah panjang jejari \textit{pebble} terluar, OPyC (\textit{Outer Pyrolitic Carbon}), SiC (\textit{Silicon Carbide}), IPyC (\textit{Inner Pyrolitic Carbon}), \textit{buffer} dan kernel. 
-  \item Data tentang kekuatan SiC. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh varibel \texttt{statusCharacteristics} (baris ke-6 pada Listing \ref{triac.py}). Ada empat nilai yang perlu dibaca terkait kekuatan SiC, masing-masing adalah SiC \textit{Tensile Strength} [Pa],	\textit{Weibull Modulus	Burnup} [FIMA],	\textit{Fission Yield of stable fission gasses} [Ff],	\textit{Fast Neutron Fluence}	dan rasio berat Th terhadap U-235 pada kernel.
-    \item Data tentang sejarah irradiasi. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusIrradiation} (baris ke-) Listing \ref{triac.py}. Data ini merupakan data temperatur bahan bakar \textit{pebble} pada selang waktu tertentu. Sebagai contoh, data yang disajikan pada Lampiran 1 diambil pada selang waktu 17 hari.
+  \item Data tentang geometri \textit{pebble}. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusGeometry} (baris ke-5 pada Listing \ref{triac.py}). Di dalam data geometri, terdapat empat data berbeda, masing-masing secara berurutan adalah panjang jejari \textit{pebble} terluar, OPyC (\textit{Outer Pyrolitic Carbon}), SiC (\textit{Silicon Carbide}), IPyC (\textit{Inner Pyrolitic Carbon}), \textit{buffer} dan kernel. Data geometri akan digunakan untuk menghitung volume setiap elemen pelapis (Gambar \ref{fig:pelapis}). Yang perlu diperhatikan adalah data jari-jari yang disajikan adalah jarak dari pusat bahan bakar sampai titik terluar dari setiap lapisan. Karena itu, volume suatu lapisan harus mempertimbangkan lapisan-lapisan di dalamnya. Data geometri disimpan dalam variabel diberi nama \texttt{dimensi} dan dalam bentuk \texttt{list} (baris ke-10 dalam Listing \ref{triac.py}).
+  \item Data tentang kekuatan SiC. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusCharacteristics} (baris ke-6 pada Listing \ref{triac.py}). Ada empat nilai yang perlu dibaca terkait kekuatan SiC, masing-masing adalah SiC \textit{Tensile Strength} [Pa],	\textit{Weibull Modulus	Burnup} [FIMA],	\textit{Fission Yield of stable fission gasses} [Ff],	\textit{Fast Neutron Fluence}	dan rasio berat Th terhadap U-235 pada kernel. Data terkait kekuatan SiC disimpan dalam variabel yang diberi nama \texttt{characteristics} dalam bentuk \texttt{list} (baris ke-11 dalam Listing \ref{triac.py}).
+    \item Data tentang sejarah irradiasi. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusIrradiation} (baris ke-7 pada Listing \ref{triac.py}). Data ini merupakan data temperatur bahan bakar \textit{pebble} pada selang waktu tertentu. Sebagai contoh, data yang disajikan pada Lampiran 1 diambil pada selang waktu 17 hari. Data sejarah irradiasi disimpan dalam variabel yang diberi nama \texttt{irradiation} dalam bentuk \texttt{list}. Setiap elemen adalah \texttt{list} yang secara \textit{nested} terdiri dari tiga elemen yang mewakili data tiap kolom pada setiap akuisisi (baris ke-12 pada Listing \ref{triac.py}). Ilustrasinya adalah seperti $[[1,	0,	593], [2,	17,	833], \ldots]$
+    \item Data tentang sejarah kecelakaan yang dalam hal ini adalah kondisi di mana temperatur bahan bakar lebih besar daripada $2000\,^{\circ}{\rm C}$. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusAccident} (baris ke-8 pada Listing \ref{triac.py}). Data ini memiliki pola yang sama dengan data sejarah irradiasi. Data sejarah keselakaan disimpan dengan cara yang sama seperti data tentang sejarah irradiasi tetapi dengan nama \texttt{accident} (baris ke-13 pada Listing \ref{triac.py}). Ilustrasinya adalah seperti $[[1,	0,	1033], [2,	0.0271,	1033],\ldots]$
 \end{enumerate}.
+ 
+\section{Menghitung OPF saat irradiasi}
+OPF (\textit{Oxygen Per Fission}) adalah jumlah atom oksigen yang terlepas selama fisi atom $U^{235}$ atau $Pu^{239}$. Atom oksigen ini mempengaruhi terbentunya senyawa CO yang akan meningkatkan tekanan internal dalam bahan bakar. Pembentukan senyawa CO juga dipengaruhi oleh temperatur, waktu serta jenis partikel kernel. 
+
+Nilai OPF didekati oleh persamaan (\ref{eq:opf1}). Nilai $n$ dalam persamaan (\ref{eq:opf1}) sama dengan banyaknya data sejarah irradiasi. Nilai $\Delta_{i}$ merupakan selisih waktu dari sejarah irradiasi yang dicatat. Nilainya akan berubah dengan berubahnya rentang pencatatan temperatur irradiasi. Jika dalam contoh kasus yang disajikan pada Lampiran 1, rentang waktu pencatatan temperatur irradiasi dilakukan setiap $7$ hari, maka $\Delta_{i}$ adalah $17$ hari atau $17 x 24 x 3600$ detik. $t$ adalah waktu irradiasi bahan bakar, yang dalam hal ini adalah waktu sejak bahan bakar digunakan sampai dikeluarkan dari teras.
+
+\begin{equation}
+  OPF \simeq \sum_{i=1}^{n} g(\overline{t_{i}}) \cdot (t-\overline{t_{i}}) \cdot \Delta t_{i}
+  \label{eq:opf1}
+\end{equation}
+ 
+Tetapi, nilai OPF juga didefinisikan seperti persamaan (\ref{eq:opf2}), dengan nilai $g(\overline{t_{i}})$ didefinisikan oleh persamaan (\ref{eq:gt}). Nilai $R$ pada persamaan (\ref{eq:gt}) adalah konstantan gas sebesar $8.3143 [\frac{J}{mole \cdot K}]$.
+\begin{equation}
+  OPF = \frac{g(T)}{2} \cdot t^2
+  \label{eq:opf2}
+\end{equation} 
+ 
+\begin{equation}
+  \frac{g(T)}{2}=8.32 \cdot 10^{-11} \cdot e^{\frac{-163000}{R \cdot T}}
+  \label{eq:gt}
+\end{equation} 
+ 
+Sebagai contoh, sejarah irradiasi untuk $10$ pencatatan pertama disajikan Gambar \ref{fig:irradiasi}. Dari Gambar \ref{fig:irradiasi}, pada pencatatan pertama, yaitu hari ke-0, temperatur bahan bakar adalah $593\,^{\circ}{\rm C}$. Selanjutnya, pada hari ke-17, temperatur bahan bakar adalah $833\,^{\circ}{\rm C}$, dst.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics{pics/irradiasihistory.png}
+  \caption{Contoh sejarah irradiasi}
+  \label{fig:irradiasi}
+\end{figure}
+
+Untuk menghitung nilai OPF
  
 % Daftar Pustaka
 \bibliographystyle{IEEEtran}
