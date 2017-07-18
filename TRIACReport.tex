@@ -1,0 +1,112 @@
+\documentclass[a4paper,11pt]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,url}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{pslatex}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage{float}
+\usepackage[paper=a4paper,headheight=0pt,left=4cm,top=3cm,right=3cm,bottom=3cm]{geometry}
+\usepackage{titling}
+\usepackage{pdfpages}
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+\newcommand{\addChapter}[1]{\phantomsection \addcontentsline{toc}{chapter}{#1}}
+% Tambahkan berkas PDF ke dalam laporan dan gunakan style laporan  
+% terhadap berkas ini. 
+\newcommand{\inpdf}[1]{
+	\includepdf[pages=-,pagecommand={\thispagestyle{fancy}}]{#1.pdf}}
+% 
+% Tambahkan berkas PDF ke dalam laporan. 
+\newcommand{\putpdf}[1]{\includepdf[pages=-]{#1.pdf}}
+% 
+\include{hype.indonesia}
+
+\renewcommand{\contentsname}{Daftar Isi}
+\renewcommand{\chaptername}{BAB}
+\renewcommand{\bibname}{Daftar Referensi}
+\renewcommand{\listfigurename}{Daftar Gambar}
+\renewcommand\lstlistlistingname{Daftar Program}
+\renewcommand{\figurename}{Gambar}
+%\title{Lampiran II}
+\title{Kajian Komputasi Dinamika Fluida berbasis OpenFOAM}
+\author{Arya Adhyaksa Waskita}
+\date{January 31, 2017}
+\begin{document}
+\include{sampul}
+%\tableofcontents
+
+\pagenumbering{roman}
+%\maketitle
+\clearpage
+\setcounter{page}{2}
+\addChapter{Daftar Gambar}
+\tableofcontents
+%\clearpage
+\listoffigures
+\addChapter{Daftar Program}
+\lstlistoflistings
+%\clearpage
+\pagenumbering{arabic}
+
+\chapter{Pendahuluan}
+BATAN saat ini tengah berencana membangun reaktor riset baru berbasis HTGR (\textit{High Temperature Gas-cooled Reactor}) \cite{wang2004integrated} sebagai persiapan PLTN, yang akan dibangun di Indonesia di masa depan \cite{rde}. Salah satu yang perlu diperhatikan dalam pengembangan reaktor jenis ini adalah bahan bakarnya yang berjenis \textit{pebble} yang bentuknya dapat diilustrasikan seperti pada Gambar \ref{fig:bentukpebble}. Bahan bakar harus dirancang sedemikian rupa sehingga rasio gagalnya bahan bakar selama operasi minimal. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=.5]{pics/triso1.png}
+  \caption[Ilustrasi bentuk bahan bakar \textit{pebble}]{Ilustrasi bentuk bahan bakar \textit{pebble} \cite{wang2004integrated}}
+  \label{fig:bentukpebble}
+\end{figure} 
+
+Bahan bakar berjenis \textit{pebble} ini memiliki komponen utama yang dalam Gambar \ref{fig:bentukpebble} disebut sebagai \textit{coated particle}. Komposisi elemen pelapis (\textit{coated}) dapat diilustrasikan dalam Gambar \ref{fig:pelapis}. Dalam upaya 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=.5]{pics/triso.png}
+  \caption[Komposisi elemen pelapis partikel]{Komposisi elemen pelapis partikel \cite{wang2004integrated}}
+  \label{fig:pelapis}
+\end{figure}
+
+\chapter{Alur Perhitungan}
+\section{Pendahuluan}
+Secara umum, perhitungan TRIAC mengikuti diagram alir seperti pada Gambar \ref{fig:flowchart} berikut. Sementara kode sumbernya disajikan dalam Listing \ref{triac.py}.
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=.5]{pics/Flowchart.png}
+  \caption{Diagram alir perhitungan TRAIC}
+  \label{fig:flowchart}
+\end{figure}
+
+\vfill
+\scriptsize
+\lstinputlisting[language=python, numbers=left, numberstyle=\tiny, caption=triac.py, showstringspaces=false, label=triac.py]{../TRIAC/inputdata.py}
+\normalsize
+
+\section{Membaca \textit{file input}}
+Sub rutin ini ditujukan untuk membaca file input dengan format seperti terdapat pada Lampiran 1. Sub rutin ini menggunakan skema yang kaku karena identifikasi nilai-nilai yang akan dibaca ditentukan oleh suatu teks tertentu. Setelah teks yang menjadi penanda, nilai-nilai yang dibutuhkan dibaca. Tetapi, nilai tersebut dapat langsung berada dalam satu baris bersama dengan teks penanda, atau berada pada baris yang berbeda. Sub rutin ini terdapat pada baris ke-3 s/d baris ke-69 dalam Listing \ref{triac.py}
+
+Terdapat empat jenis data yang perlu dibaca dari \textit{file input} dalam Lampiran 1, masing-masing adalah sebagai berikut.
+\begin{enumerate}
+  \item Data tentang geometri \textit{pebble}. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusGeometry} (baris ke-5 pada Listing \ref{triac.py}). Di dalam data geometri, terdapat empat data berbeda, masing-masing secara berurutan adalah panjang jejari \textit{pebble} terluar, OPyC (\textit{Outer Pyrolitic Carbon}), SiC (\textit{Silicon Carbide}), IPyC (\textit{Inner Pyrolitic Carbon}), \textit{buffer} dan kernel. 
+  \item Data tentang kekuatan SiC. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh varibel \texttt{statusCharacteristics} (baris ke-6 pada Listing \ref{triac.py}). Ada empat nilai yang perlu dibaca terkait kekuatan SiC, masing-masing adalah SiC \textit{Tensile Strength} [Pa],	\textit{Weibull Modulus	Burnup} [FIMA],	\textit{Fission Yield of stable fission gasses} [Ff],	\textit{Fast Neutron Fluence}	dan rasio berat Th terhadap U-235 pada kernel.
+    \item Data tentang sejarah irradiasi. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusIrradiation} (baris ke-) Listing \ref{triac.py}. Data ini merupakan data temperatur bahan bakar \textit{pebble} pada selang waktu tertentu. Sebagai contoh, data yang disajikan pada Lampiran 1 diambil pada selang waktu 17 hari.
+\end{enumerate}.
+ 
+% Daftar Pustaka
+\bibliographystyle{IEEEtran}
+\bibliography{report}
+
+\begin{appendix}
+	\include{markLampiran}
+	\setcounter{page}{2}
+	\include{lampiran}
+\end{appendix}
+
+\end{document}
