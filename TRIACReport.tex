@@ -186,9 +186,27 @@ Khusus untuk variabel $OPF$, karena perhitungan tekanan dilakukan ketika terjadi
 \end{equation}
 
 \section{Fraksi gagal bahan bakar}
-Tahapan terkahir dari analisis ini adalah perhitungan fraksi gagal bahan bakar. Nilai ini diperoleh dengan persamaan (\ref{eq:gagal}).
+Tahapan terkahir dari analisis ini adalah perhitungan fraksi gagal bahan bakar. Secara umum, fraksi gagal bahan bakar dipengaruhi sejumlah sebab. Dalam analisis yang dilakukan TRAIC (dan juga PANAMA sebagai acuannya), gagalnya bahan bakar dapat disebabkan oleh 3 sebab. Ketiganya adalah sebagai berikut.
+\begin{enumerate}
+\item Pabrikasi ($\phi_0$). Dalam analisis ini, nilai $\phi_0$ diasumsikan sama dengan $0$.
+\item Berkurangnya \textit{tensile strength} lapisan SiC ($\phi_1$). Hal ini dapat terjadi karena
+\begin{itemize}
+\item proses irradiasi maupun
+\item meningkatnya temperatur secara signifikan ketika terjadi kecelakaan) atau disebut juga \textit{grain boundary}.
+\end{itemize}  
+\item Dekomposisi termal pada temperatur tinggi yang menyebabkan terjadinya \textit{weight loss} pada lapisan SiC ($\phi_2$).
+\end{enumerate}
+
+Ketiga sebab terjadinya kegagalan bahan bakar tersebut mengikuti persamaan (\ref{eq:gagal1}).
 \begin{equation}
-  \phi(t,T)=1-e^{-\ln 2 \cdot \left(\frac{\sigma_t}{\sigma_o}\right)^m}
+  \phi_{total}=1-(1-\phi_1) -(1-\phi_2)
+  \label{eq:gagal1}
+\end{equation}
+
+\subsection{Fraksi gagal akibat berkurangnya \textit{tensile strength}}
+Nilai ini diperoleh dengan persamaan (\ref{eq:gagal}).
+\begin{equation}
+  \phi_1(t,T)=1-e^{-\ln 2 \cdot \left(\frac{\sigma_t}{\sigma_o}\right)^m}
   \label{eq:gagal}
 \end{equation}
 dengan :
@@ -215,6 +233,68 @@ Sedangkan variabel laju korosi ($\dot{v}$) dihitung dengan persamaan (\ref{eq:ko
   \dot{v}=5.87 \cdot 10^{-7} \cdot e^{-\left( \frac{179500}{R \cdot T}\right)}
   \label{eq:korosi}
 \end{equation}
+
+Selanjutnya, variabel \textit{tensile strength} lapisan SiC, penurunan nilainya mengikuti persamaan (\ref{eq:strengthSiC}). Variabel $\sigma_{oo}$ merupakan \textit{tensile strength} awal sebelum diiradiasi. Nilainya merupakan sesuatu yang dapat diukur. Sedangkan $\Gamma$ dan $\Gamma_s$ masing-masing merupakan \textit{fluence} netron cepat $\left[ 10^{25}m^{-2} EDN\right]$ dan \textit{fluence} yang dipengaruhi temperatur irradiasi. Nilai $\Gamma_s$ ditentukan menggunakan persamaan (\ref{eq:fluenceS}). Nilai minimum $\sigma_{oo}$ merupakan nilai awal \textit{tensile strength} dan diasumsikan sama dengan 196 [MPa]. Tentunya, dengan perlakuan irradiasi yang sama, lapisan SiC dengan nilai awal \textit{tensile strength} terkecil akan memiliki nilai akhir \textit{tensile strength} yang juga kecil.
+\begin{equation}
+  \sigma_o = \sigma_{oo} \cdot \left( 1- \frac{\Gamma}{\Gamma_s} \right)
+  \label{eq:strengthSiC}
+\end{equation}
+
+\begin{equation}
+  \log \Gamma_s = 0.556 + \frac{0.065 \cdot 10^4}{T_B}
+  \label{eq:fluenceS}
+\end{equation}
+
+\textit{Tensile strength} lapisan SiC yang dihitung menggunakan persamaan (\ref{eq:strengthSiC}) merupakan nilai yang berlaku pada satu \textit{coated particle}. Padahal, ada sangat banyak \textit{coated particle} yang dioperasikan. Karena itu, diperlukan perhitungan yang mempertimbangkan variabel ini untuk semua distribusi \textit{coated particles}. Dengan pendekatan yang sama seperti persamaan (\ref{eq:strengthSiC}), persamaan (\ref{eq:strengthSiCdist}) dibangun.
+
+\begin{equation}
+  m_o = m_{oo} \cdot \left( 1- \frac{\Gamma}{\Gamma_m} \right)
+  \label{eq:strengthSiCdist}
+\end{equation}
+dengan $\log \Gamma_m = 0.394 + \frac{0.065 \cdot 10^4}{T_B}$ dan nilai $m_{oo}=2$ sebagai nilai terkecilnya. Nilai $m_o$ pada persamaan (\ref{eq:strengthSiCdist}) kemudian akan disubstitusi ke persamaan (\ref{eq:gagal}) sebagai $m$.
+
+
+Selain korosi karena proses irradiasi, lapisan SiC juga dapat terkorosi karena \textit{grain Boundary}. Jika korosi akibat irradiasi tergantung pada sejarah irradiasi yang dialami bahan bakar dan terjadi sebelum kecelakaan, maka korosi karena \textit{grain Boundary} terjadi setelah kecelakaan. Penurunan nilai distribusi \textit{tensile strength} akibat menigkatnya temperatur karena kecelakaan mengikuti persamaan (\ref{eq:grainBoundary}).
+\begin{equation}
+  m=m_o \cdot \left( 0.44 + 0.56 \cdot e^{-\dot{\eta} \cdot t}\right)
+  \label{eq:grainBoundary}
+\end{equation}
+
+di mana nilai $\dot{\eta}$ mengikuti persamaan {\ref{eq:eta}} dengan pola yang sama seperti persamaan (\ref{eq:korosi}).
+\begin{equation}
+  \dot{\eta}=0.565 \cdot e^{\left(\frac{-187400}{R \cdot T}\right)} [s^{-1}]
+  \label{eq:eta}
+\end{equation}
+
+\subsection{Fraksi gagal bahan bakar akibat \textit{weight loss}}
+Laju \textit{weight loss} yang terjadi akibat tingginya temperatur saat terjadi kecelakaan mengikuti persamaan (\ref{eq:weightLoss}).
+\begin{equation}
+  k=k_o \cdot e^{\frac{-Q}{R \cdot T}}
+  \label{eq:weightLoss}
+\end{equation}
+dengan $Q=556 \left[ \frac{kJ}{mol}\right]$ dan $k_o$ adalah faktor frekuensi yang tergantung pada jenis partikel.
+
+Selanjutnya, diasumsikan bahwa partikel TRISO tergantung pada apa yang disebut sebagai ''\textit{action integral}'', dan disimbolkan dengan $\zeta$ yang nilainya mengikuti persamaan (\ref{eq:zeta}).
+\begin{equation}
+  \zeta=\int_{t_1}^{t_2} k(T) dt
+  \label{eq:zeta}
+\end{equation}
+dengan $K(T)$ adalah nilai yang menggambarkan sejarah kondisi partikel yang bergantung pada temperatur dan waktu.
+
+Secara numerik, persamaan (\ref{eq:zeta}) dapat dituliskan sebagai persamaa (\ref{eq:zeta1}).
+\begin{equation}
+  \zeta(t_2)=\zeta(t_1)+k(T_m) \cdot (t_2 - t_1)
+  \label{eq:zeta1}
+\end{equation}
+dengan $k(T_m)=\frac{375}{d_o} \cdot e^{\left(\frac{-556000}{R \cdot T_m}\right)}$.
+
+Selanjutnya, fraksi gagal $\phi_2$ sedemikian rupa sehingga nilainya $\leq 1$. Karena itu, variabel $\phi_2$ selanjutnya didefinisikan sebagai persamaan (\ref{eq:phi2}).
+\begin{equation}
+\phi_2(t,T)=1-e^{-\alpha \cdot \zeta^{\beta}}
+\label{eq:phi2}
+\end{equation}
+
+Nilai $\alpha$ dan $\beta$ kemudian ditentukan secara empiris. Dan berdasarkan penelitian empiris sebelumnya terhadap partikel $UO_2$, diperoleh nilai $\alpha=\ln 2=0.693$, sedangkan nilai $\beta=0.88$.
 
 % Daftar Pustaka
 \bibliographystyle{IEEEtran}
