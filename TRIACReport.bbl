@@ -40,4 +40,9 @@ K.~Verfondern, J.~Cao, T.~Liu, and H.-J. Allelein, ``Conclusions from v\&v
   \url{http://www.sciencedirect.com/science/article/pii/S0029549313005992}
 \BIBentrySTDinterwordspacing
 
+\bibitem{report1}
+K.~Verfondern and H.~Nabielek, ``The mathematical basis of the panama-i code
+  for modelling pressure vessel failure of triso coated particles under
+  accident conditions,'' Julich Research Center, Germany, Tech. Rep., 1990.
+
 \end{thebibliography}

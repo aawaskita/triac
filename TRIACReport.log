@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.22)  18 JUL 2017 15:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.22)  19 JUL 2017 09:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -826,32 +826,32 @@ File: pppdftex.def 2015/09/18 v0.5d Pdfpages driver for pdfTeX (AM)
 (./lampiran.aux))
 \openout1 = `TRIACReport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 41.
-LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 41
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 42.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 42
 .
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omspzccm.fd
 File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
 )
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 41.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 41.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 42.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 42.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    ... okay on input line 42.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -882,7 +882,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box33
-Package hyperref Info: Link coloring OFF on input line 41.
+Package hyperref Info: Link coloring OFF on input line 42.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -892,9 +892,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count121
 )
-LaTeX Info: Redefining \ref on input line 41.
-LaTeX Info: Redefining \pageref on input line 41.
-LaTeX Info: Redefining \nameref on input line 41.
+LaTeX Info: Redefining \ref on input line 42.
+LaTeX Info: Redefining \pageref on input line 42.
+LaTeX Info: Redefining \nameref on input line 42.
 
 (./TRIACReport.out) (./TRIACReport.out)
 \@outlinefile=\write3
@@ -947,7 +947,7 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 80.
 \openout2 = `sampul.aux'.
 
  (./sampul.tex
-<pics/logo.png, id=40, 318.18875pt x 321.2pt>
+<pics/logo.png, id=48, 318.18875pt x 321.2pt>
 File: pics/logo.png Graphic file (type png)
  <use pics/logo.png>
 Package pdftex.def Info: pics/logo.png used on input line 12.
@@ -987,7 +987,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./pics/logo.png>])
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 50.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 51.
  (./TRIACReport.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
@@ -1014,15 +1014,15 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.58 \chapter
+l.59 \chapter
              {Pendahuluan} [1
 
 ]
 BAB 1.
-<pics/triso1.png, id=88, 369.63094pt x 522.45187pt>
+<pics/triso1.png, id=96, 369.63094pt x 522.45187pt>
 File: pics/triso1.png Graphic file (type png)
  <use pics/triso1.png>
-Package pdftex.def Info: pics/triso1.png used on input line 63.
+Package pdftex.def Info: pics/triso1.png used on input line 64.
 (pdftex.def)             Requested size: 184.815pt x 261.2253pt.
 
 [2
@@ -1032,35 +1032,35 @@ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.71 
-      <./pics/triso1.png>] <pics/triso.png, id=102, 545.78906pt x 313.17pt>
+l.72 
+      <./pics/triso1.png>] <pics/triso.png, id=110, 545.78906pt x 313.17pt>
 File: pics/triso.png Graphic file (type png)
 
 <use pics/triso.png>
-Package pdftex.def Info: pics/triso.png used on input line 74.
+Package pdftex.def Info: pics/triso.png used on input line 75.
 (pdftex.def)             Requested size: 272.89386pt x 156.58461pt.
  [3pdfTeX warning (ext4): destination with the same identifier (name{figure.1.2
 }) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.79 \chapter
+l.80 \chapter
              {Alur Perhitungan} <./pics/triso.png>]
 BAB 2.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 80.
-<pics/Flowchart.png, id=110, 584.1825pt x 689.57625pt>
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 81.
+<pics/Flowchart.png, id=119, 584.1825pt x 689.57625pt>
 File: pics/Flowchart.png Graphic file (type png)
 
 <use pics/Flowchart.png>
-Package pdftex.def Info: pics/Flowchart.png used on input line 84.
+Package pdftex.def Info: pics/Flowchart.png used on input line 85.
 (pdftex.def)             Requested size: 292.09053pt x 344.78728pt.
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 91.
+nput line 92.
 
 (../TRIAC/inputdata.py
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
@@ -1072,53 +1072,47 @@ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.5 	statusGeometry=
-                    "[m]" <./pics/Flowchart.png>] [5]
+l.3 def 
+        readdata(namafile): <./pics/Flowchart.png>] [5]
 LaTeX Font Info:    Try loading font information for TS1+ptm on input line 75.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 77.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 80.
 
-Overfull \hbox (14.4656pt too wide) in paragraph at lines 79--80
-[][][][][][][][][][][][][][][][][][] 
+Overfull \hbox (14.4656pt too wide) in paragraph at lines 80--81
+[][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (254.46805pt too wide) in paragraph at lines 110--111
+Overfull \hbox (254.46805pt too wide) in paragraph at lines 105--106
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][] 
  []
 
 
-Overfull \hbox (14.4656pt too wide) in paragraph at lines 125--126
+Overfull \hbox (14.4656pt too wide) in paragraph at lines 120--121
 [][][][][][][][][][][][][][][][][][][] 
  []
 
 [6])
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <14.4> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 94.
- [7] [8] <pics/irradiasihistory.png, id=367, 88.07906pt x 129.48375pt>
-File: pics/irradiasihistory.png Graphic file (type png)
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 95.
+ [7] [8] [9]
+Overfull \hbox (32.74724pt too wide) in paragraph at lines 162--163
+\T1/ptm/m/n/10.95 fungsi seperti ter-li-hat pada List-ing []2.1[]. Masing-masin
+g fungsi terse-but adalah \T1/pcr/m/n/10.95 DS(accident,tauI)
+ []
 
-<use pics/irradiasihistory.png>
-Package pdftex.def Info: pics/irradiasihistory.png used on input line 130.
-(pdftex.def)             Requested size: 88.07883pt x 129.48341pt.
- (./TRIACReport.bbl [9pdfTeX warning (ext4): destination with the same identifi
-er (name{figure.2.2}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.2 \begin{thebibliography}{1}
-                               <./pics/irradiasihistory.png>]
+(./TRIACReport.bbl [10]
 Underfull \hbox (badness 10000) in paragraph at lines 30--33
 []\T1/ptm/m/n/10.95 ``Reaktor daya eksper-i-men-tal (rde),'' []$http : / / www 
 . batan . go . id / index . php / id /
  []
 
-) [10
+) [11
 
 ]
 \openout2 = `markLampiran.aux'.
@@ -1134,7 +1128,7 @@ l.13 \end{titlepage}
 \openout2 = `lampiran.aux'.
 
  (./lampiran.tex
-<inputExample1.pdf, id=388, 597.23125pt x 845.1575pt>
+<inputExample1.pdf, id=413, 597.23125pt x 845.1575pt>
 File: inputExample1.pdf Graphic file (type pdf)
  <use inputExample1.pdf>
 Package pdftex.def Info: inputExample1.pdf used on input line 6.
@@ -1145,7 +1139,7 @@ File: inputExample1.pdf Graphic file (type pdf)
 Package pdftex.def Info: inputExample1.pdf used on input line 6.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 
-<inputExample1.pdf, id=391, page=1, 597.23125pt x 845.1575pt>
+<inputExample1.pdf, id=416, page=1, 597.23125pt x 845.1575pt>
 File: inputExample1.pdf Graphic file (type pdf)
 
 <use inputExample1.pdf, page 1>
@@ -1184,7 +1178,7 @@ File: inputExample1.pdf Graphic file (type pdf)
  <use inputExample1.pdf, page 1>
 Package pdftex.def Info: inputExample1.pdf, page1 used on input line 6.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
- [3 <./inputExample1.pdf>] <inputExample2.pdf, id=405, 597.23125pt x 845.1575pt
+ [3 <./inputExample1.pdf>] <inputExample2.pdf, id=430, 597.23125pt x 845.1575pt
 >
 File: inputExample2.pdf Graphic file (type pdf)
 
@@ -1196,7 +1190,7 @@ File: inputExample2.pdf Graphic file (type pdf)
 Package pdftex.def Info: inputExample2.pdf used on input line 7.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 
-<inputExample2.pdf, id=408, page=1, 597.23125pt x 845.1575pt>
+<inputExample2.pdf, id=433, page=1, 597.23125pt x 845.1575pt>
 File: inputExample2.pdf Graphic file (type pdf)
 
 <use inputExample2.pdf, page 1>
@@ -1226,37 +1220,38 @@ File: inputExample2.pdf Graphic file (type pdf)
 Package pdftex.def Info: inputExample2.pdf, page1 used on input line 7.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
  [4 <./inputExample2.pdf>])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 147.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 147.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 192.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 192.
  (./TRIACReport.aux (./sampul.aux) (./markLampiran.aux)
 (./lampiran.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 147.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 147.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 192.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 192.
 Package rerunfilecheck Info: File `TRIACReport.out' has not changed.
-(rerunfilecheck)             Checksum: 4F7FD7D4FBED6D37A40922869F542971;482.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 147.
+(rerunfilecheck)             Checksum: 14AEF690AE62DDE1144B86C9512FEE15;623.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 192.
  ) 
 Here is how much of TeX's memory you used:
- 10388 strings out of 493029
- 145547 string characters out of 6136234
- 288354 words of memory out of 5000000
- 13373 multiletter control sequences out of 15000+600000
+ 10396 strings out of 493029
+ 145518 string characters out of 6136234
+ 288855 words of memory out of 5000000
+ 13378 multiletter control sequences out of 15000+600000
  80754 words of font info for 98 fonts, out of 8000000 for 9000
  1227 hyphenation exceptions out of 8191
  41i,18n,45p,963b,1968s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/sym
-bol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/urw/times/utmri8a.pfb>
-Output written on TRIACReport.pdf (17 pages, 576577 bytes).
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/us
+yr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/urw/times/utmri8a.pfb>
+Output written on TRIACReport.pdf (18 pages, 588623 bytes).
 PDF statistics:
- 504 PDF objects out of 1000 (max. 8388607)
- 452 compressed objects within 5 object streams
- 248 named destinations out of 1000 (max. 500000)
- 138 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 532 PDF objects out of 1000 (max. 8388607)
+ 479 compressed objects within 5 object streams
+ 252 named destinations out of 1000 (max. 500000)
+ 149 words of extra memory for PDF output out of 10000 (max. 10000000)
 

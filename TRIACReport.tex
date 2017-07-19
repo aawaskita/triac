@@ -25,6 +25,7 @@
 % 
 % Tambahkan berkas PDF ke dalam laporan. 
 \newcommand{\putpdf}[1]{\includepdf[pages=-]{#1.pdf}}
+\renewcommand*\descriptionlabel[1]{\hspace\leftmargin$#1$}
 % 
 \include{hype.indonesia}
 
@@ -78,7 +79,7 @@ Beragam model analisis telah dikembangkan, salah satunya yang dikembangkan oleh 
 
 \chapter{Alur Perhitungan}
 \section{Pendahuluan}
-Secara umum, perhitungan TRIAC mengikuti diagram alir seperti pada Gambar \ref{fig:flowchart} berikut. Sementara kode sumbernya disajikan dalam Listing \ref{triac.py}.
+Secara umum, perhitungan TRIAC mengikuti diagram alir seperti pada Gambar \ref{fig:flowchart} berikut. Sementara kode sumbernya disajikan dalam Listing \ref{triac.py} yang dibangun sepenuhnya berbasis pengetahuan yang diperoleh dari dokumen laporan teknis \cite{report1}.
 \begin{figure}[h]
   \centering
   \includegraphics[scale=.5]{pics/Flowchart.png}
@@ -103,16 +104,17 @@ Terdapat empat jenis data yang perlu dibaca dari \textit{file input} dalam Lampi
 \end{enumerate}.
  
 \section{Menghitung OPF saat irradiasi}
+\label{sec:OPF}
 OPF (\textit{Oxygen Per Fission}) adalah jumlah atom oksigen yang terlepas selama fisi atom $U^{235}$ atau $Pu^{239}$. Atom oksigen ini mempengaruhi terbentunya senyawa CO yang akan meningkatkan tekanan internal dalam bahan bakar. Pembentukan senyawa CO juga dipengaruhi oleh temperatur, waktu serta jenis partikel kernel. 
 
-Nilai OPF didekati oleh persamaan (\ref{eq:opf1}). Nilai $n$ dalam persamaan (\ref{eq:opf1}) sama dengan banyaknya data sejarah irradiasi. Nilai $\Delta_{i}$ merupakan selisih waktu dari sejarah irradiasi yang dicatat. Nilainya akan berubah dengan berubahnya rentang pencatatan temperatur irradiasi. Jika dalam contoh kasus yang disajikan pada Lampiran 1, rentang waktu pencatatan temperatur irradiasi dilakukan setiap $7$ hari, maka $\Delta_{i}$ adalah $17$ hari atau $17 x 24 x 3600$ detik. $t$ adalah waktu irradiasi bahan bakar, yang dalam hal ini adalah waktu sejak bahan bakar digunakan sampai dikeluarkan dari teras.
+Nilai OPF didekati oleh persamaan (\ref{eq:opf1}). Nilai $n$ dalam persamaan (\ref{eq:opf1}) sama dengan banyaknya data sejarah irradiasi. Nilai $\Delta_{i}$ merupakan selisih waktu dari sejarah irradiasi yang dicatat. Nilainya akan berubah dengan berubahnya rentang pencatatan temperatur irradiasi. Jika dalam contoh kasus yang disajikan pada Lampiran 1, rentang waktu pencatatan temperatur irradiasi dilakukan setiap $17$ hari, maka $\Delta_{i}$ adalah $17$ hari atau $17 x 24 x 3600$ detik. $t_B$ adalah waktu irradiasi total bahan bakar, sedangkan $\overline{t_i}$ waktu irradiasi ketika pencatatan dilakukan.
 
 \begin{equation}
-  OPF \simeq \sum_{i=1}^{n} g(\overline{t_{i}}) \cdot (t-\overline{t_{i}}) \cdot \Delta t_{i}
+  OPF \simeq \sum_{i=1}^{n} g(\overline{t_{i}}) \cdot (t_{B}-\overline{t_{i}}) \cdot \Delta t_{i}
   \label{eq:opf1}
 \end{equation}
  
-Tetapi, nilai OPF juga didefinisikan seperti persamaan (\ref{eq:opf2}), dengan nilai $g(\overline{t_{i}})$ didefinisikan oleh persamaan (\ref{eq:gt}). Nilai $R$ pada persamaan (\ref{eq:gt}) adalah konstantan gas sebesar $8.3143 [\frac{J}{mole \cdot K}]$.
+Tetapi, nilai OPF juga didefinisikan seperti persamaan (\ref{eq:opf2}), dengan nilai $g(\overline{t_{i}})$ didefinisikan oleh persamaan (\ref{eq:gt}). Nilai $R$ pada persamaan (\ref{eq:gt}) adalah konstanta gas sebesar $8.3143 [\frac{J}{mole \cdot K}]$.
 \begin{equation}
   OPF = \frac{g(T)}{2} \cdot t^2
   \label{eq:opf2}
@@ -123,17 +125,60 @@ Tetapi, nilai OPF juga didefinisikan seperti persamaan (\ref{eq:opf2}), dengan n
   \label{eq:gt}
 \end{equation} 
  
-Sebagai contoh, sejarah irradiasi untuk $10$ pencatatan pertama disajikan Gambar \ref{fig:irradiasi}. Dari Gambar \ref{fig:irradiasi}, pada pencatatan pertama, yaitu hari ke-0, temperatur bahan bakar adalah $593\,^{\circ}{\rm C}$. Selanjutnya, pada hari ke-17, temperatur bahan bakar adalah $833\,^{\circ}{\rm C}$, dst.
+Nilai OPF selanjutnya digunakan untuk menghitung nilai temperatur irradiasi ($T_B$) dari persamaan (\ref{eq:TB}). Formula empiris tersebut sesuai untuk jenis bahan bakar $UO_2$.
+\begin{equation}
+  \log OPF=-10.08-\frac{0.85 \cdot 10^4}{T_B} + 2 \cdot \log t_B
+  \label{eq:TB}
+\end{equation} 
 
-\begin{figure}[h]
-  \centering
-  \includegraphics{pics/irradiasihistory.png}
-  \caption{Contoh sejarah irradiasi}
-  \label{fig:irradiasi}
-\end{figure}
+Sedangkan nilai $T_B$ akan digunakan untuk menghitung $DS$, faktor berkurangnya koefisien difusi ($s^{-1}$) dari gas hasil fisi di dalam partikel kernel. Nilainya untuk bahan bakar $UO_2$ memenuhi persamaan (\ref{eq:DS}).
 
-Untuk menghitung nilai OPF
- 
+\begin{equation}
+  \log DS=-2.30-\frac{0.8116 \cdot 10^4}{T_B}
+  \label{eq:DS}.
+\end{equation}
+
+Terakhir, $DS$ akan digunakan untuk menghitung sebuah nilai tak berdimensi $\tau_i$ yang memenuhi persamaan (\ref{eq:taui}).
+\begin{equation}
+  \tau_i=DS(T_B) \cdot t_B
+  \label{eq:taui}
+\end{equation}
+
+\section{Menghitung DS saat kecelakaan}
+Seperti telah dijelaskan dalam sub bab \ref{sec:OPF}, $DS$ adalah faktor berkurangnya koefisien difusi gas hasil fisi dalam partikel kernel. Sekarang, faktor ini dihitung ketika kondisi kecelakaan terjadi. Kita memerlukan sejarah temperatur bahan bakar setelah kecelakaan terjadi serta $\tau_i$. yang telah dihitung di persamaan (\ref{eq:taui}).
+
+Dengan menggunakan persamaan (\ref{eq:taui}), kita dapat menghitung nilai $DS$ dengan temperatur kecelakaan yang tercatat.  Kemudian, kita perlu menghitung nilai $\tau_A$ dengan persamaan (\ref{eq:taui}) tetapi dengan nilai temperatur dan waktu setelah terjadi kecelakaan. Selanjutnya, dengan modal nilai $\tau_i$ dan $\tau_A$ kita akan menghitung nilai $Fd$, yang merupakan faktor fisi gas Xe dan Kr (yang dominan). Nilai $Fd$ dihitung dengan persamaan (\ref{eq:Fd}).
+\begin{equation}
+  Fd=\frac{(\tau_i + \tau_A) \cdot f(\tau_i + \tau_A) - \tau_A \cdot f(\tau_A)}{\tau_i}
+  \label{eq:Fd}
+\end{equation}
+
+Sedangkan nilai $f(\tau)$ dihitung menggunakan persaamaan (\ref{eq:ftau}). Batas atas nilai $n$ pada persaamaan (\ref{eq:ftau}) dapat menggunakan nilai yang cukup besar, misalnya $1000$, atau ketika dua nilai berdekatan yang dihasilkan hanya berselisih kurang dari $10^{-20}$. Idealnya, suku penjumlahan sebanyak $n$ akan semakin baik jika hasilnya mendekati $1$.
+\begin{equation}
+  f(\tau)=1-\frac{6}{\tau} \cdot \sum_{n=1}^{\infty} \left( 1-\frac{e^{-n^2 \cdot \pi^2 \cdot \tau}}{n^4 \cdot \pi^4} \right)
+  \label{eq:ftau}
+\end{equation}
+
+Di level implementasi, perhitungan $DS$ saat kecelakaan didistribusi ke dalam beberapa fungsi seperti terlihat pada Listing \ref{triac.py}. Masing-masing fungsi tersebut adalah \texttt{DS(accident,tauI)} dan \texttt{FD(tauA,tauI)}.
+
+\section{Menghitung tekanan}
+Tekanan adalah variabel yang penting dalam tahapan analisis ini karena akan menentukan fraksi gagal bahan bakar. Untuk menghitung tekanan yang timbul ketika kecelakaan terjadi pada waktu tertentu, sehingga menyebabkan panas tertentu, digunakan persamaan (\ref{eq:tekanan}).
+\begin{equation}
+  p=\frac{(F_d \cdot F_f + OPF) \cdot F_b}{\left( \frac{V_f}{V_k}\right) \cdot R \cdot \frac{T}{V_m}}
+  \label{eq:tekanan}
+\end{equation}
+dengan :
+\begin{description}
+  \item $F_d$ = fraksi relatif gas fisi yang lepas 
+  \item $F_f$ = produk fisi yang dihasilkan dari gas fisi stabil, $F_f$=0.31
+  \item OPF = jumlah atom oksigen setiap fisi
+  \item $F_b$ = \textit{burnup} logam berat (FIMA)
+  \item $V_f$ = fraksi void [$m^3$], terkait dengan $50\%$ volume buffer 
+  \item $V_k$ = volume kernel [$m^3$]
+  \item $V_m$ = volume molar dalam partiekl kernel $\left[\frac{m^3}{mole} \right]$
+  \item $R$ = konstanta gas, 8.3143 $\left[\frac{J}{(mole \cdot K)} \right]$
+\end{description}
+
 % Daftar Pustaka
 \bibliographystyle{IEEEtran}
 \bibliography{report}
