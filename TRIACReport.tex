@@ -162,7 +162,7 @@ Sedangkan nilai $f(\tau)$ dihitung menggunakan persaamaan (\ref{eq:ftau}). Batas
 Di level implementasi, perhitungan $DS$ saat kecelakaan didistribusi ke dalam beberapa fungsi seperti terlihat pada Listing \ref{triac.py}. Masing-masing fungsi tersebut adalah \texttt{DS(accident,tauI)} dan \texttt{FD(tauA,tauI)}.
 
 \section{Menghitung tekanan}
-Tekanan adalah variabel yang penting dalam tahapan analisis ini karena akan menentukan fraksi gagal bahan bakar. Untuk menghitung tekanan yang timbul ketika kecelakaan terjadi pada waktu tertentu, sehingga menyebabkan panas tertentu, digunakan persamaan (\ref{eq:tekanan}).
+Tekanan adalah variabel yang penting dalam tahapan analisis ini karena akan menentukan fraksi gagal bahan bakar. Untuk menghitung tekanan yang timbul ketika kecelakaan terjadi pada waktu tertentu, sehingga menyebabkan panas tertentu, digunakan persamaan (\ref{eq:tekanan}). 
 \begin{equation}
   p=\frac{(F_d \cdot F_f + OPF) \cdot F_b}{\left( \frac{V_f}{V_k}\right) \cdot R \cdot \frac{T}{V_m}}
   \label{eq:tekanan}
@@ -171,13 +171,50 @@ dengan :
 \begin{description}
   \item $F_d$ = fraksi relatif gas fisi yang lepas 
   \item $F_f$ = produk fisi yang dihasilkan dari gas fisi stabil, $F_f$=0.31
-  \item OPF = jumlah atom oksigen setiap fisi
+  \item OPF = jumlah atom oksigen setiap terjadi fisi saat terjadi kecelakaan
   \item $F_b$ = \textit{burnup} logam berat (FIMA)
   \item $V_f$ = fraksi void [$m^3$], terkait dengan $50\%$ volume buffer 
   \item $V_k$ = volume kernel [$m^3$]
   \item $V_m$ = volume molar dalam partiekl kernel $\left[\frac{m^3}{mole} \right]$
   \item $R$ = konstanta gas, 8.3143 $\left[\frac{J}{(mole \cdot K)} \right]$
 \end{description}
+
+Khusus untuk variabel $OPF$, karena perhitungan tekanan dilakukan ketika terjadi kecelakaan, digunakanlah persamaan (\ref{eq:opf3}). Persamaan (\ref{eq:opf3}) mirip dengan persamaan (\ref{eq:TB}) dengan penambahan suku ke-3.
+\begin{equation}
+  \log OPF=-10.08-\frac{0.85 \cdot 10^4}{T_B} + 2 \cdot \log t_B - 0.04 \cdot \left( \frac{10^4}{T} + \frac{10^4}{T_B + 75} \right)
+  \label{eq:opf3}
+\end{equation}
+
+\section{Fraksi gagal bahan bakar}
+Tahapan terkahir dari analisis ini adalah perhitungan fraksi gagal bahan bakar. Nilai ini diperoleh dengan persamaan (\ref{eq:gagal}).
+\begin{equation}
+  \phi(t,T)=1-e^{-\ln 2 \cdot \left(\frac{\sigma_t}{\sigma_o}\right)^m}
+  \label{eq:gagal}
+\end{equation}
+dengan :
+\begin{description}
+  \item $\sigma_o$=\textit{tensile strength} dari SiC [Pa] pada akhir irradiasi
+  \item $\sigma_t$=tekanan yang dialami SiC [Pa] akibat tekanan gas internal
+\end{description}
+
+Variabel tekanan internal pada SiC ($\sigma_t$) dihitung dengan dengan persamaan (\ref{eq:sigmaT}). Pada persamaan (\ref{eq:sigmaT}), jari-jari lapisan SiC merupakan rerata karena lapisan SiC memang memiliki ketebalan yang nilai awalnya diwakili oleh variabel $d_o$.
+\begin{equation}
+  \sigma_t =\frac{r \cdot p}{2 \cdot d_o} \cdot \left( 1+\frac{\dot{v} \cdot t}{d_o} \right)
+  \label{eq:sigmaT}
+\end{equation}
+dengan :
+\begin{description}
+  \item $r$=rerata jari-jari SiC, $\left( 0.5 \cdot \left( r_a^3 + r_i^3 \right)\right)^{\frac{1}{3}}$ [m]
+  \item $d_o$=ketebalan awal lapisan SiC, $r_a - r_i$ [m]
+  \item $p$=tekanan gas fisi dalam partikel [Pa]
+  \item $\dot{v}$=laju korosi sebagai fungsi temperatur (T), $\left[\frac{m}{s}\right]$
+\end{description}
+
+Sedangkan variabel laju korosi ($\dot{v}$) dihitung dengan persamaan (\ref{eq:korosi}), mirip dengan persamaan (\ref{eq:gt}) dengan perbedaan pada konstanta.
+\begin{equation}
+  \dot{v}=5.87 \cdot 10^{-7} \cdot e^{-\left( \frac{179500}{R \cdot T}\right)}
+  \label{eq:korosi}
+\end{equation}
 
 % Daftar Pustaka
 \bibliographystyle{IEEEtran}
