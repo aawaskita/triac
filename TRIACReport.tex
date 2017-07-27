@@ -99,8 +99,8 @@ Terdapat empat jenis data yang perlu dibaca dari \textit{file input} dalam Lampi
 \begin{enumerate}
   \item Data tentang geometri \textit{pebble}. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusGeometry} (baris ke-5 pada Listing \ref{triac.py}). Di dalam data geometri, terdapat empat data berbeda, masing-masing secara berurutan adalah panjang jejari \textit{pebble} terluar, OPyC (\textit{Outer Pyrolitic Carbon}), SiC (\textit{Silicon Carbide}), IPyC (\textit{Inner Pyrolitic Carbon}), \textit{buffer} dan kernel. Data geometri akan digunakan untuk menghitung volume setiap elemen pelapis (Gambar \ref{fig:pelapis}). Yang perlu diperhatikan adalah data jari-jari yang disajikan adalah jarak dari pusat bahan bakar sampai titik terluar dari setiap lapisan. Karena itu, volume suatu lapisan harus mempertimbangkan lapisan-lapisan di dalamnya. Data geometri disimpan dalam variabel diberi nama \texttt{dimensi} dan dalam bentuk \texttt{list} (baris ke-10 dalam Listing \ref{triac.py}).
   \item Data tentang kekuatan SiC. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusCharacteristics} (baris ke-6 pada Listing \ref{triac.py}). Ada empat nilai yang perlu dibaca terkait kekuatan SiC, masing-masing adalah SiC \textit{Tensile Strength} [Pa],	\textit{Weibull Modulus	Burnup} [FIMA],	\textit{Fission Yield of stable fission gasses} [Ff],	\textit{Fast Neutron Fluence}	dan rasio berat Th terhadap U-235 pada kernel. Data terkait kekuatan SiC disimpan dalam variabel yang diberi nama \texttt{characteristics} dalam bentuk \texttt{list} (baris ke-11 dalam Listing \ref{triac.py}).
-    \item Data tentang sejarah irradiasi. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusIrradiation} (baris ke-7 pada Listing \ref{triac.py}). Data ini merupakan data temperatur bahan bakar \textit{pebble} pada selang waktu tertentu. Sebagai contoh, data yang disajikan pada Lampiran 1 diambil pada selang waktu 17 hari. Data sejarah irradiasi disimpan dalam variabel yang diberi nama \texttt{irradiation} dalam bentuk \texttt{list}. Setiap elemen adalah \texttt{list} yang secara \textit{nested} terdiri dari tiga elemen yang mewakili data tiap kolom pada setiap akuisisi (baris ke-12 pada Listing \ref{triac.py}). Ilustrasinya adalah seperti $[[1,	0,	593], [2,	17,	833], \ldots]$
-    \item Data tentang sejarah kecelakaan yang dalam hal ini adalah kondisi di mana temperatur bahan bakar lebih besar daripada $2000\,^{\circ}{\rm C}$. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusAccident} (baris ke-8 pada Listing \ref{triac.py}). Data ini memiliki pola yang sama dengan data sejarah irradiasi. Data sejarah keselakaan disimpan dengan cara yang sama seperti data tentang sejarah irradiasi tetapi dengan nama \texttt{accident} (baris ke-13 pada Listing \ref{triac.py}). Ilustrasinya adalah seperti $[[1,	0,	1033], [2,	0.0271,	1033],\ldots]$
+    \item Data tentang sejarah irradiasi. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusIrradiation} (baris ke-7 pada Listing \ref{triac.py}). Data ini merupakan data temperatur bahan bakar \textit{pebble} pada selang waktu tertentu. Sebagai contoh, data yang disajikan pada Lampiran 1 diambil pada selang waktu 17 hari. Data sejarah irradiasi disimpan dalam variabel yang diberi nama \texttt{irradiation} dalam bentuk \texttt{list}. Setiap elemen adalah \texttt{list} yang secara \textit{nested} terdiri dari dua elemen yang mewakili data kolom kedua dan ketiga tiap akuisisi (baris ke-12 pada Listing \ref{triac.py}). Ilustrasinya adalah seperti $[[0,	593], [17,	833], \ldots]$. Data tentang nomor urut tidak digunakan karena selain tidak diperlukan dalam perhitungan, akan menyulitkan proses interpolasi yang akan diterapkan berikutnya.
+    \item Data tentang sejarah kecelakaan. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusAccident} (baris ke-8 pada Listing \ref{triac.py}). Data ini memiliki pola yang sama dengan data sejarah irradiasi. Data sejarah keselakaan disimpan dengan cara yang sama seperti data tentang sejarah irradiasi tetapi dengan nama \texttt{accident} (baris ke-13 pada Listing \ref{triac.py}). Ilustrasinya adalah seperti $[[0,	1033], [0.0271,	1033],\ldots]$
 \end{enumerate}.
  
 \section{Menghitung OPF saat irradiasi}
@@ -155,16 +155,16 @@ Dengan menggunakan persamaan (\ref{eq:taui}), kita dapat menghitung nilai $DS$ d
 
 Sedangkan nilai $f(\tau)$ dihitung menggunakan persaamaan (\ref{eq:ftau}). Batas atas nilai $n$ pada persaamaan (\ref{eq:ftau}) dapat menggunakan nilai yang cukup besar, misalnya $1000$, atau ketika dua nilai berdekatan yang dihasilkan hanya berselisih kurang dari $10^{-20}$. Idealnya, suku penjumlahan sebanyak $n$ akan semakin baik jika hasilnya mendekati $1$.
 \begin{equation}
-  f(\tau)=1-\frac{6}{\tau} \cdot \sum_{n=1}^{\infty} \left( 1-\frac{e^{-n^2 \cdot \pi^2 \cdot \tau}}{n^4 \cdot \pi^4} \right)
+  f(\tau)=1-\frac{6}{\tau} \cdot \sum_{n=1}^{\infty} \left( \frac{1-e^{-n^2 \cdot \pi^2 \cdot \tau}}{n^4 \cdot \pi^4} \right)
   \label{eq:ftau}
 \end{equation}
 
-Di level implementasi, perhitungan $DS$ saat kecelakaan didistribusi ke dalam beberapa fungsi seperti terlihat pada Listing \ref{triac.py}. Masing-masing fungsi tersebut adalah \texttt{DS(accident,tauI)} dan \texttt{FD(tauA,tauI)}.
+%Di level implementasi, perhitungan $DS$ saat kecelakaan didistribusi ke dalam beberapa fungsi seperti terlihat pada Listing \ref{triac.py}. Masing-masing fungsi tersebut adalah \texttt{DS(accident,tauI)} dan \texttt{FD(tauA,tauI)}.
 
 \section{Menghitung tekanan}
-Tekanan adalah variabel yang penting dalam tahapan analisis ini karena akan menentukan fraksi gagal bahan bakar. Untuk menghitung tekanan yang timbul ketika kecelakaan terjadi pada waktu tertentu, sehingga menyebabkan panas tertentu, digunakan persamaan (\ref{eq:tekanan}). 
+Tekanan adalah variabel yang penting dalam tahapan analisis ini karena akan menentukan fraksi gagal bahan bakar. Untuk menghitung tekanan yang timbul ketika kecelakaan terjadi pada waktu tertentu, sehingga menyebabkan panas tertentu, digunakan persamaan (\ref{eq:tekanan}) \cite{wang2004integrated}. 
 \begin{equation}
-  p=\frac{(F_d \cdot F_f + OPF) \cdot F_b}{\left( \frac{V_f}{V_k}\right) \cdot R \cdot \frac{T}{V_m}}
+  p=\frac{(F_d \cdot F_f + OPF) \cdot F_b \cdot (\frac{V_f}{V_k}) \cdot R \cdot T}{ V_m}
   \label{eq:tekanan}
 \end{equation}
 dengan :
@@ -204,7 +204,7 @@ Ketiga sebab terjadinya kegagalan bahan bakar tersebut mengikuti persamaan (\ref
 \end{equation}
 
 \subsection{Fraksi gagal akibat berkurangnya \textit{tensile strength}}
-Nilai ini diperoleh dengan persamaan (\ref{eq:gagal}).
+Nilai fraksi gagal bahan bakar pada waktu $t$ setelah terjadinya kecelakaan diperoleh dengan persamaan (\ref{eq:gagal}).
 \begin{equation}
   \phi_1(t,T)=1-e^{-\ln 2 \cdot \left(\frac{\sigma_t}{\sigma_o}\right)^m}
   \label{eq:gagal}
@@ -254,7 +254,7 @@ Selanjutnya, variabel \textit{tensile strength} lapisan SiC, penurunan nilainya 
 dengan $\log \Gamma_m = 0.394 + \frac{0.065 \cdot 10^4}{T_B}$ dan nilai $m_{oo}=2$ sebagai nilai terkecilnya. Nilai $m_o$ pada persamaan (\ref{eq:strengthSiCdist}) kemudian akan disubstitusi ke persamaan (\ref{eq:gagal}) sebagai $m$.
 
 
-Selain korosi karena proses irradiasi, lapisan SiC juga dapat terkorosi karena \textit{grain Boundary}. Jika korosi akibat irradiasi tergantung pada sejarah irradiasi yang dialami bahan bakar dan terjadi sebelum kecelakaan, maka korosi karena \textit{grain Boundary} terjadi setelah kecelakaan. Penurunan nilai distribusi \textit{tensile strength} akibat menigkatnya temperatur karena kecelakaan mengikuti persamaan (\ref{eq:grainBoundary}).
+Selain korosi karena proses irradiasi, lapisan SiC juga dapat terkorosi karena \textit{grain Boundary}. Jika korosi akibat irradiasi tergantung pada sejarah irradiasi yang dialami bahan bakar dan terjadi sebelum kecelakaan, maka korosi karena \textit{grain Boundary} terjadi setelah kecelakaan. Penurunan nilai distribusi \textit{tensile strength} akibat meningkatnya temperatur karena kecelakaan mengikuti persamaan (\ref{eq:grainBoundary}).
 \begin{equation}
   m=m_o \cdot \left( 0.44 + 0.56 \cdot e^{-\dot{\eta} \cdot t}\right)
   \label{eq:grainBoundary}
@@ -288,13 +288,15 @@ Secara numerik, persamaan (\ref{eq:zeta}) dapat dituliskan sebagai persamaa (\re
 \end{equation}
 dengan $k(T_m)=\frac{375}{d_o} \cdot e^{\left(\frac{-556000}{R \cdot T_m}\right)}$.
 
-Selanjutnya, fraksi gagal $\phi_2$ sedemikian rupa sehingga nilainya $\leq 1$. Karena itu, variabel $\phi_2$ selanjutnya didefinisikan sebagai persamaan (\ref{eq:phi2}).
+Kemudian, fraksi gagal $\phi_2$ sedemikian rupa sehingga nilainya $\leq 1$. Karena itu, variabel $\phi_2$ selanjutnya didefinisikan sebagai persamaan (\ref{eq:phi2}).
 \begin{equation}
 \phi_2(t,T)=1-e^{-\alpha \cdot \zeta^{\beta}}
 \label{eq:phi2}
 \end{equation}
 
 Nilai $\alpha$ dan $\beta$ kemudian ditentukan secara empiris. Dan berdasarkan penelitian empiris sebelumnya terhadap partikel $UO_2$, diperoleh nilai $\alpha=\ln 2=0.693$, sedangkan nilai $\beta=0.88$.
+
+Dalam TRIAC, faktor fraksi gagal ini tidak akan dipertimbangkan. Hal ini disebabkan karena kondisi ini terjadi pada temperatur di atas $2000\,^{\circ}{\rm C}$. Sementara RDE tidak dirancang untuk sampai pada temperatur tersebut.
 
 % Daftar Pustaka
 \bibliographystyle{IEEEtran}
