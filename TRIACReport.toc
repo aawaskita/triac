@@ -3,12 +3,14 @@
 \contentsline {chapter}{\numberline {1}Pendahuluan}{2}{chapter.1}
 \contentsline {chapter}{\numberline {2}Alur Perhitungan}{4}{chapter.2}
 \contentsline {section}{\numberline {2.1}Pendahuluan}{4}{section.2.1}
-\contentsline {section}{\numberline {2.2}Membaca \textit {file input}}{8}{section.2.2}
-\contentsline {section}{\numberline {2.3}Menghitung OPF saat irradiasi}{9}{section.2.3}
-\contentsline {section}{\numberline {2.4}Menghitung DS saat kecelakaan}{10}{section.2.4}
-\contentsline {section}{\numberline {2.5}Menghitung tekanan}{10}{section.2.5}
-\contentsline {section}{\numberline {2.6}Fraksi gagal bahan bakar}{11}{section.2.6}
-\contentsline {subsection}{\numberline {2.6.1}Fraksi gagal akibat berkurangnya \textit {tensile strength}}{11}{subsection.2.6.1}
-\contentsline {subsection}{\numberline {2.6.2}Fraksi gagal bahan bakar akibat \textit {weight loss}}{13}{subsection.2.6.2}
+\contentsline {section}{\numberline {2.2}Membaca \textit {file input}}{5}{section.2.2}
+\contentsline {section}{\numberline {2.3}Menghitung OPF saat irradiasi}{6}{section.2.3}
+\contentsline {section}{\numberline {2.4}Menghitung DS saat kecelakaan}{6}{section.2.4}
+\contentsline {section}{\numberline {2.5}Menghitung tekanan}{7}{section.2.5}
+\contentsline {section}{\numberline {2.6}Fraksi gagal bahan bakar}{8}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Fraksi gagal akibat berkurangnya \textit {tensile strength}}{8}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}Fraksi gagal bahan bakar akibat \textit {weight loss}}{9}{subsection.2.6.2}
+\contentsline {chapter}{\numberline {3}Penerapan}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}Pendahuluan}{11}{section.3.1}
 \contentsline {chapter}{LAMPIRAN}{1}{section*.7}
 \contentsline {chapter}{Lampiran 1}{2}{section*.8}

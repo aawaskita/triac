@@ -87,11 +87,6 @@ Secara umum, perhitungan TRIAC mengikuti diagram alir seperti pada Gambar \ref{f
   \label{fig:flowchart}
 \end{figure}
 
-\vfill
-\scriptsize
-\lstinputlisting[language=python, numbers=left, numberstyle=\tiny, caption=triac.py, showstringspaces=false, label=triac.py]{../TRIAC/inputdata.py}
-\normalsize
-
 \section{Membaca \textit{file input}}
 Sub rutin ini ditujukan untuk membaca file input dengan format seperti terdapat pada Lampiran 1. Sub rutin ini menggunakan skema yang kaku karena identifikasi nilai-nilai yang akan dibaca ditentukan oleh suatu teks tertentu. Setelah teks yang menjadi penanda, nilai-nilai yang dibutuhkan dibaca. Tetapi, nilai tersebut dapat langsung berada dalam satu baris bersama dengan teks penanda, atau berada pada baris yang berbeda. Sub rutin ini terdapat pada baris ke-3 s/d baris ke-69 dalam Listing \ref{triac.py}
 
@@ -297,6 +292,16 @@ Kemudian, fraksi gagal $\phi_2$ sedemikian rupa sehingga nilainya $\leq 1$. Kare
 Nilai $\alpha$ dan $\beta$ kemudian ditentukan secara empiris. Dan berdasarkan penelitian empiris sebelumnya terhadap partikel $UO_2$, diperoleh nilai $\alpha=\ln 2=0.693$, sedangkan nilai $\beta=0.88$.
 
 Dalam TRIAC, faktor fraksi gagal ini tidak akan dipertimbangkan. Hal ini disebabkan karena kondisi ini terjadi pada temperatur di atas $2000\,^{\circ}{\rm C}$. Sementara RDE tidak dirancang untuk sampai pada temperatur tersebut.
+
+\chapter{Penerapan}
+\section{Pendahuluan}
+TRIA \textit{Code} yang telah dijelaskan sebelumnya secara umum dapat dikelompokkan menjadi dua tugas utama, masing-masing adalah perhitungan di waktu irradiasi dan kecelakaan. Untuk perhitungan pertama, kita harus bisa mendapatkan nilai OPF (persamaan \ref{eq:opf1}), $T_B$ (persamaan \ref{eq:TB}), $DS$ persamaan \ref{eq:DS}) dan $\tau_i$ (persamaan \ref{eq:taui}). Penerapannya adalah seperti pada Listing \ref{triac.py}.
+
+\vfill
+\scriptsize
+\lstinputlisting[language=python, numbers=left, numberstyle=\tiny, caption=triac.py, showstringspaces=false, label=triac.py]{../TRIAC/inputdata2a.py}
+\normalsize
+
 
 % Daftar Pustaka
 \bibliographystyle{IEEEtran}

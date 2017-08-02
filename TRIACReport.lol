@@ -1,1 +1,1 @@
-\contentsline {lstlisting}{\numberline {2.1}triac.py}{5}{lstlisting.2.1}
+\contentsline {lstlisting}{\numberline {3.1}triac.py}{12}{lstlisting.3.1}
