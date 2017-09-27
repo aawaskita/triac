@@ -295,12 +295,19 @@ Dalam TRIAC, faktor fraksi gagal ini tidak akan dipertimbangkan. Hal ini disebab
 
 \chapter{Penerapan}
 \section{Pendahuluan}
-TRIA \textit{Code} yang telah dijelaskan sebelumnya secara umum dapat dikelompokkan menjadi dua tugas utama, masing-masing adalah perhitungan di waktu irradiasi dan kecelakaan. Untuk perhitungan pertama, kita harus bisa mendapatkan nilai OPF (persamaan \ref{eq:opf1}), $T_B$ (persamaan \ref{eq:TB}), $DS$ persamaan \ref{eq:DS}) dan $\tau_i$ (persamaan \ref{eq:taui}). Penerapannya adalah seperti pada Listing \ref{triac.py}.
+TRIA \textit{Code} yang telah dijelaskan sebelumnya secara umum dapat dikelompokkan menjadi dua tugas utama, masing-masing adalah perhitungan di waktu irradiasi dan kecelakaan. Penerapannya adalah seperti pada Listing \ref{triac.py}.
 
-\vfill
 \scriptsize
 \lstinputlisting[language=python, numbers=left, numberstyle=\tiny, caption=triac.py, showstringspaces=false, label=triac.py]{../TRIAC/inputdata2a.py}
 \normalsize
+
+\section{Saat irradiasi}
+Untuk perhitungan pertama, kita harus bisa mendapatkan nilai OPF (persamaan \ref{eq:opf1}), $T_B$ (persamaan \ref{eq:TB}), $DS$ persamaan \ref{eq:DS}) dan $\tau_i$ (persamaan \ref{eq:taui}). Pada Listing \ref{triac.py}, tugas tersebut didelegasikan pada fungsi \texttt{OPF (irradiation, dt)} (baris ke-71 s/d 9). Fungsi tersebut membutuhkan dua argumen, dengan argumen pertama adalah sejarah irradiasi dalam bentuk array. Jika melihat contoh yang disajikan pada Lampiran \ref{lamp:inputExample}, data tersebut terletak setelah baris berisi \texttt{INPUT: Irradiation Temp. Hystory}. Array akan berdimensi dua, yaitu setiap elemen array merupan array dengan dua elemen, masing-masing adalah waktu dan temperatur irradiasi.
+
+Argumen kedua sejatinya menunjukkan selisih waktu antara pengambilan data yang satu dengan pengambilan data berikutnya. Nilai tersebut diterapkan dalam Listing \ref{triac.py} sebagai variabel $y$. Karena selisih waktu antar pengambilan data yang dimaksud pada contoh Lampiran \ref{lamp:inputExample} dinilai cukup tinggi (17 hari), maka interpolasi dicoba untuk diterapkan juga. Hal ini dilatarbelakangi hasil simulasi yang disajikan dalam literatur \cite{report1}. Sebagai ilustrasi, jika tanpa interpolasi, nilai temperatur irradiasi $T_B=1057.41\,^{\circ}{\rm C}$. Bila dijalankan dengan menggunakan skenario selisih antar pengambilan data adalah $\frac{17}{2}=8.5$ hari, dihasilkan nilai $T_B=1046.55\,^{\circ}{\rm C}$. Sedangkan, nilai $T_B$ yang dihitung dengan skenario selisih antar pengambilan data adalah $1$ hari (interpolasi jumlah pembagian sebanyak $17$ menghasilkan nilai $1040.07\,^{\circ}{\rm C}$. Nilai $T_B$ selanjutnya akan semakin kecil dengan semakin kecilnya jarak pengambilan data (semakin besar pembagian untuk interpolasi).
+
+Selanjutnya
+
 
 
 % Daftar Pustaka
