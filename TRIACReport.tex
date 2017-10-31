@@ -88,15 +88,7 @@ Secara umum, perhitungan TRIAC mengikuti diagram alir seperti pada Gambar \ref{f
 \end{figure}
 
 \section{Membaca \textit{file input}}
-Sub rutin ini ditujukan untuk membaca file input dengan format seperti terdapat pada Lampiran 1. Sub rutin ini menggunakan skema yang kaku karena identifikasi nilai-nilai yang akan dibaca ditentukan oleh suatu teks tertentu. Setelah teks yang menjadi penanda, nilai-nilai yang dibutuhkan dibaca. Tetapi, nilai tersebut dapat langsung berada dalam satu baris bersama dengan teks penanda, atau berada pada baris yang berbeda. Sub rutin ini terdapat pada baris ke-3 s/d baris ke-69 dalam Listing \ref{triac.py}
-
-Terdapat empat jenis data yang perlu dibaca dari \textit{file input} dalam Lampiran 1, masing-masing adalah sebagai berikut.
-\begin{enumerate}
-  \item Data tentang geometri \textit{pebble}. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusGeometry} (baris ke-5 pada Listing \ref{triac.py}). Di dalam data geometri, terdapat empat data berbeda, masing-masing secara berurutan adalah panjang jejari \textit{pebble} terluar, OPyC (\textit{Outer Pyrolitic Carbon}), SiC (\textit{Silicon Carbide}), IPyC (\textit{Inner Pyrolitic Carbon}), \textit{buffer} dan kernel. Data geometri akan digunakan untuk menghitung volume setiap elemen pelapis (Gambar \ref{fig:pelapis}). Yang perlu diperhatikan adalah data jari-jari yang disajikan adalah jarak dari pusat bahan bakar sampai titik terluar dari setiap lapisan. Karena itu, volume suatu lapisan harus mempertimbangkan lapisan-lapisan di dalamnya. Data geometri disimpan dalam variabel diberi nama \texttt{dimensi} dan dalam bentuk \texttt{list} (baris ke-10 dalam Listing \ref{triac.py}).
-  \item Data tentang kekuatan SiC. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusCharacteristics} (baris ke-6 pada Listing \ref{triac.py}). Ada empat nilai yang perlu dibaca terkait kekuatan SiC, masing-masing adalah SiC \textit{Tensile Strength} [Pa],	\textit{Weibull Modulus	Burnup} [FIMA],	\textit{Fission Yield of stable fission gasses} [Ff],	\textit{Fast Neutron Fluence}	dan rasio berat Th terhadap U-235 pada kernel. Data terkait kekuatan SiC disimpan dalam variabel yang diberi nama \texttt{characteristics} dalam bentuk \texttt{list} (baris ke-11 dalam Listing \ref{triac.py}).
-    \item Data tentang sejarah irradiasi. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusIrradiation} (baris ke-7 pada Listing \ref{triac.py}). Data ini merupakan data temperatur bahan bakar \textit{pebble} pada selang waktu tertentu. Sebagai contoh, data yang disajikan pada Lampiran 1 diambil pada selang waktu 17 hari. Data sejarah irradiasi disimpan dalam variabel yang diberi nama \texttt{irradiation} dalam bentuk \texttt{list}. Setiap elemen adalah \texttt{list} yang secara \textit{nested} terdiri dari dua elemen yang mewakili data kolom kedua dan ketiga tiap akuisisi (baris ke-12 pada Listing \ref{triac.py}). Ilustrasinya adalah seperti $[[0,	593], [17,	833], \ldots]$. Data tentang nomor urut tidak digunakan karena selain tidak diperlukan dalam perhitungan, akan menyulitkan proses interpolasi yang akan diterapkan berikutnya.
-    \item Data tentang sejarah kecelakaan. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusAccident} (baris ke-8 pada Listing \ref{triac.py}). Data ini memiliki pola yang sama dengan data sejarah irradiasi. Data sejarah keselakaan disimpan dengan cara yang sama seperti data tentang sejarah irradiasi tetapi dengan nama \texttt{accident} (baris ke-13 pada Listing \ref{triac.py}). Ilustrasinya adalah seperti $[[0,	1033], [0.0271,	1033],\ldots]$
-\end{enumerate}.
+Sub rutin ini ditujukan untuk membaca file input dengan format seperti terdapat pada Lampiran \ref{lamp:inputExample}. Sub rutin ini menggunakan skema yang kaku karena identifikasi nilai-nilai yang akan dibaca ditentukan oleh suatu teks tertentu. Setelah teks yang menjadi penanda, nilai-nilai yang dibutuhkan dibaca. Tetapi, nilai tersebut dapat langsung berada dalam satu baris bersama dengan teks penanda, atau berada pada baris yang berbeda. Sub rutin ini terdapat pada Listing \ref{InputData.py} dan akan dijelaskan pada sub bab \ref{sec:introPenerapan}.
  
 \section{Menghitung OPF saat irradiasi}
 \label{sec:OPF}
@@ -295,18 +287,74 @@ Dalam TRIAC, faktor fraksi gagal ini tidak akan dipertimbangkan. Hal ini disebab
 
 \chapter{Penerapan}
 \section{Pendahuluan}
-TRIA \textit{Code} yang telah dijelaskan sebelumnya secara umum dapat dikelompokkan menjadi dua tugas utama, masing-masing adalah perhitungan di waktu irradiasi dan kecelakaan. Penerapannya adalah seperti pada Listing \ref{triac.py}.
+\label{sec:introPenerapan}
+TRIA \textit{Code} yang telah dijelaskan sebelumnya secara umum dapat dikelompokkan menjadi dua tugas utama, masing-masing adalah perhitungan di waktu irradiasi dan kecelakaan. Seluruh proses tersebut didahului dengan membaca \textit{file input} dengan format yang sama seperti pada Lampiran \ref{lamp:inputExample}. Penerapan pembacaan \textit{file input} adalah seperti pada Listing \ref{InputData.py}.%\ref{triac.py}.
+
+Di Listing \ref{InputData.py}, pembacaan \textit{input data} dilakukan secara sekuensial dan manual. Nilai-nilai yang harus dibaca ditentukan berdasarkan informasi yang ada pada \textit{file input}. Sebagai contoh, untuk membaca nilai geometri, digunakan karakter ''[m]'' sebagai penanda. Jika ditemukan karakter tersebut, maka di saat itulah pembacaan nilai geometri dilakukan. Hal inilah yang dimaksud sebagai pembacaan secara manual. Ketika karakter yang diperlukan berubah, maka modifikasi harus dilakukan pada modul ini.
+
+Selain nilai terkait geometri, diperlukan juga pembacaan untuk nilai \textit{physical properties} serta sejarah operasi, baik saat operasi normal maupun kecelakaan. Pembacaan nilai yang berbeda dilakukan secara berurutan berdasarkan kemunculan nilai tersebut dalam \textit{file input}. Hal inilah yang dimaksud dengan pembacaan secara sekuensial.
+
+Terdapat empat jenis data yang perlu dibaca dari \textit{file input} dalam Lampiran 1, masing-masing adalah sebagai berikut. Penerapannya disajikan dalam Listing \ref{InputData.py}.
+\begin{enumerate}
+  \item Data tentang geometri \textit{pebble}. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusGeometry} (baris ke-4. Di dalam data geometri, terdapat empat data berbeda, masing-masing secara berurutan adalah panjang jejari \textit{pebble} terluar, OPyC (\textit{Outer Pyrolitic Carbon}), SiC (\textit{Silicon Carbide}), IPyC (\textit{Inner Pyrolitic Carbon}), \textit{buffer} dan kernel. Data geometri akan digunakan untuk menghitung volume setiap elemen pelapis (Gambar \ref{fig:pelapis}). Yang perlu diperhatikan adalah data jari-jari yang disajikan adalah jarak dari pusat bahan bakar sampai titik terluar dari setiap lapisan. Karena itu, volume suatu lapisan harus mempertimbangkan lapisan-lapisan di dalamnya. Data geometri disimpan dalam variabel diberi nama \texttt{dimensi} dan dalam bentuk \texttt{list} (baris ke-9).
+  \item Data tentang kekuatan SiC. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusCharacteristics} (baris ke-5 pada Listing \ref{InputData.py}). Ada empat nilai yang perlu dibaca terkait kekuatan SiC, masing-masing adalah SiC \textit{Tensile Strength} [Pa],	\textit{Weibull Modulus	Burnup} [FIMA],	\textit{Fission Yield of stable fission gasses} [Ff],	\textit{Fast Neutron Fluence}	dan rasio berat Th terhadap U-235 pada kernel. Data terkait kekuatan SiC disimpan dalam variabel yang diberi nama \texttt{characteristics} dalam bentuk \texttt{list} (baris ke-10).
+    \item Data tentang sejarah irradiasi. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusIrradiation} (baris ke-6 pada Listing \ref{InputData.py}). Data ini merupakan data temperatur bahan bakar \textit{pebble} pada selang waktu tertentu. Sebagai contoh, data yang disajikan pada Lampiran 1 diambil pada selang waktu 17 hari. Data sejarah irradiasi disimpan dalam variabel yang diberi nama \texttt{irradiation} dalam bentuk \texttt{list}. Setiap elemen adalah \texttt{list} yang secara \textit{nested} terdiri dari dua elemen yang mewakili data kolom kedua dan ketiga tiap akuisisi (baris ke-11). Ilustrasinya adalah seperti $[[0,	593], [1468800,	833], \ldots]$ dengan informasi waktu pengukuran dalam satuan detik. Data tentang nomor urut tidak digunakan karena selain tidak diperlukan dalam perhitungan, akan menyulitkan proses interpolasi yang akan diterapkan berikutnya.
+    \item Data tentang sejarah kecelakaan. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusAccident} (baris ke-7). Data ini memiliki pola yang sama dengan data sejarah irradiasi. Data sejarah keselakaan disimpan dengan cara yang sama seperti data tentang sejarah irradiasi tetapi dengan nama \texttt{accident} (baris ke-12). Ilustrasinya adalah seperti $[[0,	1033], [2341.44,	1033],\ldots]$ dengan informasi waktu pengukuran dalam satuan detik.
+\end{enumerate}.
+
+Namun, terlihat pada baris ke-77 dari Listing \ref{InputData.py}, terdapat total 5 variabel yang dikembalikan ke fungsi awal, dengan variabel kelima adalah $b-a$. Variabel ini adalah rentang waktu pengukuran data irradiasi.
 
 \scriptsize
-\lstinputlisting[language=python, numbers=left, numberstyle=\tiny, caption=triac.py, showstringspaces=false, label=triac.py]{../TRIAC/inputdata2a.py}
+\lstinputlisting[language=python, numbers=left, numberstyle=\tiny, caption=InputData.py, showstringspaces=false, label=InputData.py]{../TRIAC/InputData.py}
 \normalsize
 
-\section{Saat irradiasi}
-Untuk perhitungan pertama, kita harus bisa mendapatkan nilai OPF (persamaan \ref{eq:opf1}), $T_B$ (persamaan \ref{eq:TB}), $DS$ persamaan \ref{eq:DS}) dan $\tau_i$ (persamaan \ref{eq:taui}). Pada Listing \ref{triac.py}, tugas tersebut didelegasikan pada fungsi \texttt{OPF (irradiation, dt)} (baris ke-72 s/d 90). Fungsi tersebut membutuhkan dua argumen, dengan argumen pertama adalah sejarah irradiasi dalam bentuk array. Jika melihat contoh yang disajikan pada Lampiran \ref{lamp:inputExample}, data tersebut terletak setelah baris berisi \texttt{INPUT: Irradiation Temp. Hystory}. Array akan berdimensi dua, yaitu setiap elemen array merupan array dengan dua elemen, masing-masing adalah waktu dan temperatur irradiasi.
+Selain itu, untuk meningkatkan ketelitian perhitungan, disiapkan juga modul interpolasi secara linier. Modul ini disiapkan agar sejarah operasi normal dan kecelakaan sehingga dapat diperoleh hasil yang tepat. Penerapan dari modul interpolasi linier tersebut disajikan pada Listing \ref{Interpolasi.py}.
 
-Argumen kedua sejatinya menunjukkan selisih waktu antara pengambilan data yang satu dengan pengambilan data berikutnya. Nilai tersebut diterapkan dalam Listing \ref{triac.py} sebagai variabel $y$. Karena selisih waktu antar pengambilan data yang dimaksud pada contoh Lampiran \ref{lamp:inputExample} dinilai cukup tinggi (17 hari), maka interpolasi dicoba untuk diterapkan juga. Hal ini dilatarbelakangi hasil simulasi yang disajikan dalam literatur \cite{report1}. Sebagai ilustrasi, jika tanpa interpolasi, nilai temperatur irradiasi $T_B=1057.41\,^{\circ}{\rm C}$. Bila dijalankan dengan menggunakan skenario selisih antar pengambilan data adalah $\frac{17}{2}=8.5$ hari, dihasilkan nilai $T_B=1046.55\,^{\circ}{\rm C}$. Sedangkan, nilai $T_B$ yang dihitung dengan skenario selisih antar pengambilan data adalah $1$ hari (interpolasi jumlah pembagian sebanyak $17$ menghasilkan nilai $1040.07\,^{\circ}{\rm C}$. Nilai $T_B$ selanjutnya akan semakin kecil dengan semakin kecilnya jarak pengambilan data (semakin besar pembagian untuk interpolasi).
+Seperti terlihat pada Lampiran \ref{lamp:inputExample}, sejarah operasi normal atau disebut juga sebagai sejarah irradiasi, terdapat 3 kolom dalam \textit{file input}. Demikian juga untuk sejarah ketika terjadi kecelakaan. Ketiganya adalah nomor urut, hari ke sekian dan temperatur. Dengan melakukan interpolasi, selisih hari yang digunakan dapat diperkecil. Dalam contoh \textit{file input}, selisih pencatatan adalah 17 hari. Dengan interpolasi, kita dapat mengestimasi sejarah dalam selisih waktu yang lebih singkat. 
 
+Interpolasi yang diterapkan dapat diilustrasikan dalam Gambar \ref{fig:interpolasi} \footnote{\url{http://jadipaham.com/wp-content/uploads/2015/10/Rumus-interpolasi-linear.jpg}}. Argumen ketiga dari fungsi \texttt{linier (a,b,c)}, $c$, adalah jumlah partisi diantara nilai $x_1$ dan $x_2$. Nilai tersebut adalah $dt$ yang merupakan argumen ketika mengeksekusi kode komputer TRIAC (Listing \ref{triac.py}). Penggunaan fungsi interpolasi ini dilakukan di Listing \ref{triac.py} pada baris ke-53 s/d 66.
 
+\begin{figure}
+  \centering
+  \includegraphics[scale=.5]{pics/interpolasi-linear.png}
+  \caption{Ilustrasi interpolasi linier yang digunakan}
+  \label{fig:interpolasi}
+\end{figure}
+
+\scriptsize
+\lstinputlisting[language=python, numbers=left, numberstyle=\tiny, caption=Interpolasi.py, showstringspaces=false, label=Interpolasi.py]{../TRIAC/Interpolasi.py}
+\normalsize
+
+\section{TRIAC Core}
+Terdapat empat fungsi di dalam modul \texttt{core.py} seperti terlihat pada Listing \ref{core.py}. Fungsi-fungsi yang terdapat dalam modul ini dianggap sebagai fungsi yang sering digunakan dan relatif kompleks jika diletakkan dalam program utama TRIAC. Berikut adalah penjelasannya.
+
+\begin{enumerate}
+\item \texttt{OPF (irradiation,y,tb)} (baris ke-3 s/d 14). Fungsi tersebut membutuhkan tiga argumen, dengan argumen pertama adalah sejarah irradiasi dalam bentuk array. Jika melihat contoh yang disajikan pada Lampiran \ref{lamp:inputExample}, data tersebut terletak setelah baris berisi \texttt{INPUT: Irradiation Temp. Hystory}. Array akan berdimensi dua, yaitu setiap elemen array merupan array dengan dua elemen, masing-masing adalah waktu (dalam detik) dan temperatur irradiasi.
+
+Argumen kedua, $y$ adalah rentang waktu pengukuran ketika massa irradiasi. Contoh pada Lampiran 1 menunjukkan bahwa pengukuran dilakukan setiap 17 hari. Ketika kita ingin rentang pengukuran ini lebih kecil dari 17, maka kita dapat memperolehnya dengan fungsi interpolasi. Waktu interpolasi ini harus dalam satuan detik. Sedangkan argumen ketiga adalah total masa irradiasi, yang dalam contoh Lampiran 1 adalah 1020 hari.
+
+Fungsi OPF akan menghitung akumulasi nilai $g$ untuk setiap perubahan temperatur dan waktu irradiasi seperti dijelaskan pada persamaan (\ref{eq:gt}). Akumulasi nilai $g$ tersebut adalah nilai OPF seperti dijelaskan pada persamaan (\ref{eq:opf1}). Itu sebabnya kenapa fungsi ini diberi nama \texttt{OPF}.
+
+Kemudian, nilai OPF digunakan untuk menghitung nilai $Tb$ seperti dijelaskan persamaan (\ref{eq:TB}). Nilai $Tb$ selanjutnya digunakan untuk menghitung nilai $ds$ seperti dijelaskan persamaan (\ref{eq:DS}) dan diterapkan oleh fungsi \texttt{DS} (baris ke-31 s/d 34 Listing \ref{core.py}). Akhirnya, nilai $\tau_i$ diperoleh dari nilai $ds$ seperti dijelaskan persamaan (\ref{eq:taui}). Tetapi, rentetan perhitungan tersebut tidak dilakukan di fungsi \texttt{OPF}, melainkan dalam program \texttt{triac.py} seperti pada Listing \ref{triac.py}. Fungsi yang dibuat diusahakan untuk hanya mengerjakan satu fungsi saja.
+
+\item \texttt{FTau (tau)} (baris ke-16 s/d 24). Fungsi ini digunakan untuk menghitung nilai $f_{\tau}$ seperti dijelaskan pada persamaan (\ref{eq:ftau}). Fungsi ini menerapkan nilai $2000$ sebagai batas atas iterasi.
+
+\item \texttt{OPFAccident (Tb,tb,T)} (baris ke-26 s/d 29). Fungsi ini akan menerima argumen kondisi kecelakaan melalui argumen ketiga $T$. Sedangkan argumen pertama $Tb$ diperoleh dari fungsi pertama, \texttt{OPF}.
+\end{enumerate}
+\scriptsize
+\lstinputlisting[language=python, numbers=left, numberstyle=\tiny, caption=core.py, showstringspaces=false, label=core.py]{../TRIAC/core.py}
+\normalsize
+
+\section{Perhitungan TRIAC}
+Bagian ini adalah inti dari perhitungan TRIAC yang alur eksekusinya diilustrasikan pada Gambar \ref{fig:flowchart}. Program ini akan menerima dua argumen selain nama programnya sendiri, yaitu nama \textit{file input} (baris ke-8) serta jumlah interpolasi yang diinginkan (baris ke-9) dalam rentang pengukuran yang sudah ada. Tetapi, jika pengguna tidak memberikan argumen tersebut, program akan dieksekusi dengan \textit{file input} dan jumlah interpolasi yang telah ditetapkan (baris ke-11 dan 12).
+
+Proses selanjutnya adalah membaca informasi dari \textit{file input}. Ada lima informasi yang harus diperoleh dari \textit{file input}, masing-masing adalah
+informasi geometri, karakteristik material, sejarah irradiasi dan kecelakaan serta rentang pengukuran temperatur saat irradiasi. Setelah data-data tersebut diperoleh, langkah selanjutnya adalah perhitungan geometri partikel triso. Proses ini dilakukan dalam baris ke-23 s/d 37.
+
+Langkah selanjutnya setelah perhitungan geometri adalah interpolasi. Tetapi, karena opsi tanpa interpolasipun harus diakomodasi, maka ada kondisi yang harus dipenuhi seperi pada baris ke-44 dan baris ke-96. Jika nilai $dt>1$, maka interpolasi harus dilakukan.
+\scriptsize
+\lstinputlisting[language=python, numbers=left, numberstyle=\tiny, caption=triac.py, showstringspaces=false, label=triac.py]{../TRIAC/inputdata2ilustrasi.py}
+\normalsize
 
 % Daftar Pustaka
 \bibliographystyle{IEEEtran}
