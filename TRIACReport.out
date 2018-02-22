@@ -10,9 +10,15 @@
 \BOOKMARK [1][-]{section.2.6}{Fraksi gagal bahan bakar}{chapter.2}% 10
 \BOOKMARK [2][-]{subsection.2.6.1}{Fraksi gagal akibat berkurangnya tensile strength}{section.2.6}% 11
 \BOOKMARK [2][-]{subsection.2.6.2}{Fraksi gagal bahan bakar akibat weight loss}{section.2.6}% 12
-\BOOKMARK [0][-]{chapter.3}{Penerapan}{}% 13
-\BOOKMARK [1][-]{section.3.1}{Pendahuluan}{chapter.3}% 14
-\BOOKMARK [1][-]{section.3.2}{TRIAC Core}{chapter.3}% 15
-\BOOKMARK [1][-]{section.3.3}{Perhitungan TRIAC}{chapter.3}% 16
-\BOOKMARK [0][-]{section*.7}{LAMPIRAN}{}% 17
-\BOOKMARK [0][-]{section*.8}{Lampiran 1}{}% 18
+\BOOKMARK [2][-]{subsection.2.6.3}{Pertumbuhan fraksi gagal}{section.2.6}% 13
+\BOOKMARK [0][-]{chapter.3}{Penerapan}{}% 14
+\BOOKMARK [1][-]{section.3.1}{Pendahuluan}{chapter.3}% 15
+\BOOKMARK [1][-]{section.3.2}{Pembacaan file input}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.3}{TRIAC Core}{chapter.3}% 17
+\BOOKMARK [1][-]{section.3.4}{Perhitungan TRIAC}{chapter.3}% 18
+\BOOKMARK [0][-]{section*.7}{LAMPIRAN}{}% 19
+\BOOKMARK [0][-]{section*.8}{Lampiran 1}{}% 20
+\BOOKMARK [0][-]{section*.10}{Lampiran 2: InputData.py}{}% 21
+\BOOKMARK [0][-]{section*.12}{Lampiran 3: interpolasi.py}{}% 22
+\BOOKMARK [0][-]{section*.14}{Lampiran 4: core.py}{}% 23
+\BOOKMARK [0][-]{section*.16}{Lampiran 5: triac.py}{}% 24
