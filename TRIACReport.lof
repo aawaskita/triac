@@ -1,12 +1,15 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Ilustrasi bentuk bahan bakar \textit {pebble}}}{2}{figure.1.1}
-\contentsline {figure}{\numberline {1.2}{\ignorespaces Komposisi elemen pelapis partikel}}{3}{figure.1.2}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Diagram alir perhitungan TRIAC}}{4}{figure.2.1}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Hubungan antara waktu dan temperatur pada perhitungan $\phi _1$}}{10}{figure.2.2}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Diagram alir perhitungan TRIAC}}{3}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Hubungan antara waktu dan temperatur pada perhitungan $\phi _1$}}{9}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Diagram aktifitas eksekusi TRIAC}}{12}{figure.2.3}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Hubungan ketergantungan antar variabel di fase irradiasi}}{11}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Hubungan ketergantungan antar variabel di fase kecelakaan}}{11}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Ilustrasi interpolasi linier yang digunakan}}{13}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Interaksi antar fungsi untuk mendapatkan fraksi gagal partikel triso}}{16}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Interaksi antar fungsi untuk mendapatkan nilai tekanan yang dialami lapisan silikon karbida}}{17}{figure.3.5}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Hubungan ketergantungan antar variabel di fase irradiasi}}{13}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Hubungan ketergantungan antar variabel di fase kecelakaan}}{14}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Ilustrasi interpolasi linier yang digunakan}}{16}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Interaksi antar fungsi untuk mendapatkan fraksi gagal partikel triso}}{21}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Interaksi antar fungsi untuk mendapatkan nilai tekanan yang dialami lapisan silikon karbida}}{22}{figure.3.5}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Hasil perhitungan PANAMA untuk berbagai kondisi pengujian}}{23}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces PANAMA vs. TRIAC-BATAN for three accident scenarios}}{24}{figure.4.2}

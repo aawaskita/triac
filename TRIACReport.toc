@@ -1,24 +1,32 @@
 \contentsline {chapter}{Daftar Gambar}{ii}{section*.1}
-\contentsline {chapter}{Daftar Program}{iii}{section*.4}
+\contentsline {chapter}{Daftar Program}{iv}{section*.4}
 \contentsline {chapter}{\numberline {1}Pendahuluan}{2}{chapter.1}
-\contentsline {chapter}{\numberline {2}Alur Perhitungan}{4}{chapter.2}
-\contentsline {section}{\numberline {2.1}Pendahuluan}{4}{section.2.1}
-\contentsline {section}{\numberline {2.2}Membaca \textit {file input}}{5}{section.2.2}
-\contentsline {section}{\numberline {2.3}Menghitung OPF saat irradiasi}{5}{section.2.3}
-\contentsline {section}{\numberline {2.4}Menghitung DS saat kecelakaan}{6}{section.2.4}
-\contentsline {section}{\numberline {2.5}Menghitung tekanan}{6}{section.2.5}
-\contentsline {section}{\numberline {2.6}Fraksi gagal bahan bakar}{7}{section.2.6}
-\contentsline {subsection}{\numberline {2.6.1}Fraksi gagal akibat berkurangnya \textit {tensile strength}}{7}{subsection.2.6.1}
-\contentsline {subsection}{\numberline {2.6.2}Fraksi gagal bahan bakar akibat \textit {weight loss}}{9}{subsection.2.6.2}
-\contentsline {subsection}{\numberline {2.6.3}Pertumbuhan fraksi gagal}{10}{subsection.2.6.3}
-\contentsline {chapter}{\numberline {3}Penerapan}{11}{chapter.3}
-\contentsline {section}{\numberline {3.1}Pendahuluan}{11}{section.3.1}
-\contentsline {section}{\numberline {3.2}Pembacaan \textit {file input}}{11}{section.3.2}
-\contentsline {section}{\numberline {3.3}TRIAC Core}{14}{section.3.3}
-\contentsline {section}{\numberline {3.4}Perhitungan TRIAC}{15}{section.3.4}
+\contentsline {chapter}{\numberline {2}Alur Perhitungan}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Pendahuluan}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Membaca \textit {file input}}{4}{section.2.2}
+\contentsline {section}{\numberline {2.3}Menghitung OPF saat irradiasi}{4}{section.2.3}
+\contentsline {section}{\numberline {2.4}Menghitung DS saat kecelakaan}{5}{section.2.4}
+\contentsline {section}{\numberline {2.5}Menghitung tekanan}{5}{section.2.5}
+\contentsline {section}{\numberline {2.6}Fraksi gagal bahan bakar}{6}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Fraksi gagal akibat berkurangnya \textit {tensile strength}}{6}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}Fraksi gagal bahan bakar akibat \textit {weight loss}}{8}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}Pertumbuhan fraksi gagal}{9}{subsection.2.6.3}
+\contentsline {section}{\numberline {2.7}Simulasi LHS}{9}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}Pendahuluan}{9}{subsection.2.7.1}
+\contentsline {subsection}{\numberline {2.7.2}Opsi distribusi}{9}{subsection.2.7.2}
+\contentsline {subsection}{\numberline {2.7.3}Fungsi \textit {inverse} untuk mendapatkan nilai $X$}{11}{subsection.2.7.3}
+\contentsline {subsection}{\numberline {2.7.4}Alur eksekusi}{11}{subsection.2.7.4}
+\contentsline {chapter}{\numberline {3}Penerapan}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}Pendahuluan}{13}{section.3.1}
+\contentsline {section}{\numberline {3.2}Pembacaan \textit {file input}}{14}{section.3.2}
+\contentsline {section}{\numberline {3.3}TRIAC Core}{16}{section.3.3}
+\contentsline {section}{\numberline {3.4}Perhitungan TRIAC}{20}{section.3.4}
+\contentsline {chapter}{\numberline {4}Pengujian perhitungan TRIAC}{23}{chapter.4}
+\contentsline {section}{\numberline {4.1}Pendahuluan}{23}{section.4.1}
+\contentsline {section}{\numberline {4.2}Hasil pengujian}{24}{section.4.2}
 \contentsline {chapter}{LAMPIRAN}{1}{section*.7}
 \contentsline {chapter}{Lampiran 1}{2}{section*.8}
 \contentsline {chapter}{Lampiran 2: InputData.py}{5}{section*.10}
 \contentsline {chapter}{Lampiran 3: interpolasi.py}{6}{section*.12}
 \contentsline {chapter}{Lampiran 4: core.py}{7}{section*.14}
-\contentsline {chapter}{Lampiran 5: triac.py}{9}{section*.16}
+\contentsline {chapter}{Lampiran 5: triac.py}{10}{section*.16}

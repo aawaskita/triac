@@ -14,6 +14,9 @@
 \usepackage{booktabs}
 \usepackage[version=4]{mhchem}
 \usepackage{isotope}
+\usepackage{datetime2}
+\DTMsetdatestyle{ddmmyyyy}
+\DTMsetup{datesep=--}
 \newcommand{\subtitle}[1]{%
   \posttitle{%
     \par\end{center}
@@ -66,25 +69,18 @@ BATAN saat ini tengah berencana membangun reaktor riset baru berbasis HTGR (\tex
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale=.5]{pics/triso1.png}
-  \caption[Ilustrasi bentuk bahan bakar \textit{pebble}]{Ilustrasi bentuk bahan bakar \textit{pebble} \cite{wang2004integrated}}
+  \includegraphics[scale=.5]{pics/triso.JPG}
+  \caption[Ilustrasi bentuk bahan bakar \textit{pebble}]{Ilustrasi bentuk bahan bakar \textit{pebble} \cite{tsdipura}}
   \label{fig:bentukpebble}
 \end{figure} 
 
-Bahan bakar berjenis \textit{pebble} ini memiliki komponen utama yang dalam Gambar \ref{fig:bentukpebble} disebut sebagai \textit{coated particle}. Komposisi elemen pelapis (\textit{coated}) dapat diilustrasikan dalam Gambar \ref{fig:pelapis}. Dalam upaya menguasai teknologi reaktor berjenis HTGR melalui pengembangan RDE, salah tugas yang harus dilaksanakan adalah penguasaan analisis kegagalan bahan bakarnya, khususnya ketika terjadi kecelakaan.
+Bahan bakar berjenis \textit{pebble} ini memiliki komponen utama yang dalam Gambar \ref{fig:bentukpebble} disebut sebagai \textit{triso fuel particle}, dengan triso adalah \textit{tri structural isotrophic}. Dalam upaya menguasai teknologi reaktor berjenis HTGR melalui pengembangan RDE, salah tugas yang harus dilaksanakan adalah penguasaan analisis kegagalan bahan bakarnya, khususnya ketika terjadi kecelakaan.
 
-Beragam model analisis telah dikembangkan, salah satunya yang dikembangkan oleh Wang \cite{wang2004integrated}. Selain itu, terdapat sebuah model sederhana yang dikembangkan oleh Verfondern dalam PANAMA \cite{VERFONDERN201484}. Pada model tersebut, bahan bakar disebut gagal jika kekuatan lapisan SiC (\textit{Silicon Carbide}) lebih kecil daripada tekanan internal dari lapisan di bawahnya (perhatikan Gambar \ref{fig:pelapis}). Model inilah yang akan diterapkan dalam TRIAC (\textit{TRIso Analysis Code}).
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[scale=.5]{pics/triso.png}
-  \caption[Komposisi elemen pelapis partikel]{Komposisi elemen pelapis partikel \cite{wang2004integrated}}
-  \label{fig:pelapis}
-\end{figure}
+Beragam model analisis telah dikembangkan, salah satunya yang dikembangkan oleh Wang \cite{wang2004integrated}. Selain itu, terdapat sebuah model sederhana yang dikembangkan oleh Verfondern dalam PANAMA \cite{VERFONDERN201484}. Pada model tersebut, bahan bakar disebut gagal jika kekuatan lapisan SiC (\textit{Silicon Carbide}) lebih kecil daripada tekanan internal dari lapisan di bawahnya. Model inilah yang akan diterapkan dalam TRIAC (\textit{TRIso Analysis Code}).
 
 \chapter{Alur Perhitungan}
 \section{Pendahuluan}
-Secara umum, perhitungan TRIAC mengikuti diagram alir seperti pada Gambar \ref{fig:flowchart} berikut. Sementara kode sumbernya disajikan dalam Listing \ref{triac.py} yang dibangun sepenuhnya berbasis pengetahuan yang diperoleh dari dokumen laporan teknis \cite{report1}.
+Secara umum, perhitungan TRIAC mengikuti diagram alir seperti pada Gambar \ref{fig:flowchart} berikut. Penerapannya disajikan dalam Listing \ref{triac.py} berdasarkan pengetahuan yang diperoleh dari dokumen teknis PANAMA \cite{report1}. Meski diagram alir tersebut tergambar secara sekuensial, tetapi secara perhitungan ada beberapa formula yang tidak saling tergantung, sehingga urutannya dapat saja dibalik. Hubungan saling ketergantungan antar formula disajikan dalam Gambar \ref{fig:irradiasi} dan \ref{fig:accident}. 
 \begin{figure}[h]
   \centering
   \includegraphics[scale=.5]{pics/Flowchart.png}
@@ -93,7 +89,7 @@ Secara umum, perhitungan TRIAC mengikuti diagram alir seperti pada Gambar \ref{f
 \end{figure}
 
 \section{Membaca \textit{file input}}
-Sub rutin ini ditujukan untuk membaca file input dengan format seperti terdapat pada Lampiran \ref{lamp:inputExample}. Sub rutin ini menggunakan skema yang kaku karena identifikasi nilai-nilai yang akan dibaca ditentukan oleh suatu teks tertentu. Setelah teks yang menjadi penanda, nilai-nilai yang dibutuhkan dibaca. Tetapi, nilai tersebut dapat langsung berada dalam satu baris bersama dengan teks penanda, atau berada pada baris yang berbeda. Sub rutin ini terdapat pada Listing \ref{InputData.py} dan akan dijelaskan pada sub bab \ref{sec:introPenerapan}.
+Sub rutin ini ditujukan untuk membaca \textit{file input} dengan format seperti terdapat pada Lampiran \ref{lamp:inputExample}. Sub rutin ini menggunakan skema yang kaku karena identifikasi nilai-nilai yang akan dibaca ditentukan oleh suatu teks tertentu. Setelah teks yang menjadi penanda, nilai-nilai yang dibutuhkan dibaca. Tetapi, nilai tersebut dapat langsung berada dalam satu baris bersama dengan teks penanda, atau berada pada baris yang berbeda. Sub rutin ini terdapat pada Listing \ref{InputData.py} dan akan dijelaskan pada sub bab \ref{sec:introPenerapan}.
  
 \section{Menghitung OPF saat irradiasi}
 \label{sec:OPF}
@@ -343,6 +339,106 @@ Disebutkan Verfondern \cite{report1}, nilai $\phi_1$ saat kecelakaan dimulai ($t
 
 Sebagai ilustrasi, saat menghitung nilai $\phi_1$ di $t=t_1$, maka diperlukan nilai $\phi_1(t_0, T_m)$ (nilai pertama) dan $\phi_1(t_1, T_m)$ (nilai kedua). Nilai pertama adalah fungsi irradiasi, sedangkan nilai kedua diperoleh dari persamaan (\ref{eq:gagal}) dengan parameter-parameter yang sesuai. Selisih keduanya akan menentukan nilai $\phi_1$ di titik $t=t_1$. Jika selisih nilai kedua dan pertama positif, selisih nilai tersebut diakumulasikan pada nilai $\phi_1$ di $t=t_0$. Tetapi jika sebaliknya, maka nilai $\phi_1$ di titik $t=t_1$ sama dengan nilai $\phi_1$ di titik $t=t_0$. Skenario yang sama berlaku untuk titik-titik waktu selanjutnya.
 
+\section{Simulasi LHS}
+\label{sec:lhs}
+\subsection{Pendahuluan}
+\textit{Latin Hypercube Sampling} (LHS) saat ini telah menjadi metode sampling yang paling banyak digunakan dalam analisis keandalan dan ketidakpastian pada analisis sistem kompleks berbasis Monte-Carlo \cite{HELTON200323,SHIELDS201696}. LHS sendiri didefinisikan sebagai metode untuk menghasilkan \textit{sample} acak dari nilai parameter \cite{lhs}. Alasan LHS banyak digunakan dalam metode berbasis Monte Carlo adalah karena kemampuannya mengurangi jumlah eksekusi untuk memperoleh hasil yang cukup akurat.
+
+LHS dapat dimodelkan sebagai sebuah fungsi $y=f(x)$, dengan $f$ merepresentasikan model dari sistem yang sedang dikaji, $x=[x_1, x_2, \ldots]$ merupakan vektor input bagi model, dan $y=[y_1, y_2, \ldots]$ merupakan vektor prediksi model \cite{HELTON200323}. Tujuan dari analisis ketidakpastian ini adalah untuk menentukan ketidakpastian elemen $y$ sebagai akibat dari ketidakpastian elemen $x$. Dalam konteks TRIAC, LHS dapat digunakan untuk menentukan ketidakpastian fraksi gagal bahan bakar triso sebagai akibat ketidakpastian dimensi partikel tersebut. Tabel \ref{tab:variasi} menunjukkan contoh ketidakpastian parameter dalam partikel triso \cite{report2}
+
+\begin{table}[h!] % <--
+  \begin{center}
+\caption[Nilai nominal dan variasinya pada komposisi partikel triso]{Nilai nominal dan variasinya pada komposisi partikel triso\cite{report2}}  
+\label{tab:variasi}
+\scriptsize
+\ra{1.3}
+  \begin{tabular}{p{4.5cm}p{1.8cm}p{2cm}p{2.6cm}p{2cm}p{2cm}} \toprule
+Item & Nilai Nominal & Toleransi disain & Rentang teramati & Standar deviasi \\ \midrule
+Uranium fuel loading ($\frac{g}{fuel\;pebble}$) & $5.0g$ & $5.0\;\pm\;0.1g$ & $4.95-5.05g$ & n/a \\
+Density of graphite in matrix and outer shell of fuel pebble & $1.73\frac{g}{cm^3}$ & $1.75\;\pm\;0.02\frac{g}{cm^3}$ & $1.73\frac{g}{cm^3}$ & n/a \\
+Total ash in fuel element & $0$ & $\leq\;300.0\;ppm$ & $130-190\;ppm$ & n/a \\
+Lithium in fuel element & $0$ & $\leq\;0.3\;ppm$ & $0.007-0.023\;ppm$ & n/a \\
+Boron in fuel element & 1.3\;ppm & $\leq\;0.3\;ppm$ & $0.15\;ppm$ & n/a \\
+Ratio of oxygen to uranium in kernel & 2 & $<2.01$ & n/a & n/a \\
+Density of kernel & $10.4\frac{g}{cm^3}$ & $>10.4\frac{g}{cm^3}$ & $10.83\frac{g}{cm^3}$ & n/a \\
+Density of buffer layer & $1.1\frac{g}{cm^3}$ & $\leq\;1.1\frac{g}{cm^3}$ & $1.02\frac{g}{cm^3}$ & teramati $0.03\frac{g}{cm^3}$\\
+Density of IPyC layer & $1.9\frac{g}{cm^3}$ & $1.1\;\pm\;0.1\frac{g}{cm^3}$ & $1.86\;\pm\;0.06\frac{g}{cm^3}$ & n/a \\
+Density of SiC layer & $3.18\frac{g}{cm^3}$ & $\geq\;3.18\frac{g}{cm^3}$ & $3.21\;\pm\;0.02\frac{g}{cm^3}$ & n/a \\
+Density of OPyC layer & $1.9\frac{g}{cm^3}$ & $1.9\;\pm\;0.1\frac{g}{cm^3}$ & $1.87\;\pm\;0.02\frac{g}{cm^3}$ & n/a \\
+Density of reflector graphite & $1.6\frac{g}{cm^3}$ & n/a & n/a & n/a \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+\normalsize
+
+\subsection{Opsi distribusi}
+LHS bekerja dengan tahapan sebagai berikut \cite{mbasinta}.
+\begin{enumerate}
+  \item Mendefinisikan variabel $Y=f(x_i)$. Pendefinisian variabel $Y$ melibatkan
+  \begin{itemize}
+    \item jumlah variabel $X$
+    \item konstanta setiap variabel $x_i$
+  \end{itemize}
+  \item Mendefinisikan variabel $X$. Beberapa tahapan yang perlu dilakukan adalah sebagai berikut.
+  \begin{itemize}
+    \item Menentukan jenis distribusi. Untuk TRIAC, jenis distribusi yang akan digunakan adalah normal, \textit{uniform} dan triangular. Sample yang dihasilkan jumlahnya akan mengikuti distribusi yang ditetapkan.
+    \begin{itemize}
+      \item Distribusi normal membutuhkan parameter rerata ($\mu$) dan varian ($\sigma$)
+      \item Distribusi \textit{uniform} membutuhkan parameter $n_1$ dan $n_2$, dengan $n_1$ dan $n_2$ masing-masing adalah nilai terendah dan tertinggi
+      \item Distribusi triangular membutuhkan parameter $min$, $mod$, $max$, yang masing-masing adalah nilai terendah, nilai yang paling sering muncul dan nilai tertinggi.
+    \end{itemize}
+    \item Menghasilkan \textit{sample} untuk variabel $X$ dengan tahapan sebagai berikut.
+    \begin{itemize}
+       \item Bangkitkan bilangan random ($r$) dalam rentang $0$ dan $1$.
+       \item Hitung nilai $P_m$ menggunakan persamaan (\ref{eq:pm}) sebagai instrumen untuk memastikan semua \textit{sample} (sejumlah $N$) yang dihasilkan tercuplik dari setiap \textit{mesh region} ($m$). 
+       \item Menghitung nilai $X$ dengan persamaan (\ref{eq:X}). Fungsi $F^{-1}$ tergantung dari distribusi yang menjadi target dan akan dijelaskan lebih detil dalam sub bab \ref{sec:finverse}. 
+     \end{itemize} 
+     
+\begin{equation}
+P_m=\frac{1}{N} \cdot \left(r+m-1\right)
+\label{eq:pm}
+\end{equation}
+
+\begin{equation}
+X=F^{-1}\left(P_m\right)
+\label{eq:X}
+\end{equation}
+
+    \end{itemize}
+    \item Setelah sample untuk variabel $X$ diperoleh, variabel $Y$ dapat dihitung. Nilai $Y$ sesuai nilai setiap sample $X$ yang ada selanjutnya dirata-rata dan dihitung variannya ($\sigma$).
+\end{enumerate}
+
+\subsection{Fungsi \textit{inverse} untuk mendapatkan nilai $X$}
+\label{sec:finverse}
+Berikut adalah fungsi inverse ($F^{-1}$) untuk distribusi dan kondisinya.
+\begin{enumerate}
+  \item Distribusi normal $\rightarrow$ $X=n_2 \cdot \sqrt{2} \cdot ((2\;\cdot\;P_m)+n_1)$
+  \item Distribusi \textit{uniform} $\rightarrow$ $X=(P_m \cdot (n_2-n_1))+n_1$
+  \item Distribusi triangular
+  \begin{itemize}
+    \item kondisi $P_m\;\leq\;k$ $\rightarrow$ $X=n_1+\sqrt{P_m\cdot(n_3-n_1)\cdot(n_2-n_1)}$
+    \item kondisi $P_m>k$ $\rightarrow$ $X=n_3+\sqrt{(1-P_m)\cdot(n_3-n_1)\cdot(n_3-n_2)}$
+    \item dengan kondisi $k$ adalah
+    \begin{itemize}
+      \item $k=0.0$ jika $n_1=n_2$
+      \item $k=1.0$ jika $n_2=n_3$
+      \item $k=\frac{n_2-n_1}{n_3-n_1}$ jika $n_1 \neq n_2$ dan $n_2 \neq n_3$
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Alur eksekusi}
+Ketika LHS digunakan, perhitungan yang telah dijelaskan sebelumnya akan diulang sebanyak \textit{sample} yang dibutuhkan. Karena itu, ketika opsi LHS digunakan, \textit{looping} terluar adalah \textit{looping} LHS sebanyak \textit{sample}. Secara umum, eksekusi TRIAC akan mengikuti alur seperti diagram aktifitas di Gambar \ref{fig:total}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=.45]{pics/aktifitasTotal.png}
+    \caption{Diagram aktifitas eksekusi TRIAC}
+    \label{fig:total}
+  \end{center}
+\end{figure}
+
 \chapter{Penerapan}
 \section{Pendahuluan}
 \label{sec:introPenerapan}
@@ -350,7 +446,7 @@ TRIA \textit{Code} yang telah dijelaskan sebelumnya secara umum dapat dikelompok
 
 \begin{figure}[h]
   \begin{center}
-    \includegraphics[scale=.5]{pics/alurFormula2.png}
+    \includegraphics[scale=.5]{pics/irrCalculation.png}
     \caption{Hubungan ketergantungan antar variabel di fase irradiasi}
     \label{fig:irradiasi}
   \end{center}
@@ -358,7 +454,7 @@ TRIA \textit{Code} yang telah dijelaskan sebelumnya secara umum dapat dikelompok
 
 \begin{figure}[h]
   \begin{center}
-    \includegraphics[scale=.5]{pics/alurFormula.png}
+    \includegraphics[scale=.5]{pics/accCalculation.png}
     \caption{Hubungan ketergantungan antar variabel di fase kecelakaan}
     \label{fig:accident}
   \end{center}
@@ -397,7 +493,7 @@ Selain nilai terkait geometri, diperlukan juga pembacaan untuk nilai \textit{phy
 
 Terdapat empat jenis data yang perlu dibaca dari \textit{file input} dalam Lampiran 1, masing-masing adalah sebagai berikut. Penerapannya disajikan dalam Listing \ref{InputData.py}.
 \begin{enumerate}
-  \item Data tentang geometri \textit{pebble}. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusGeometry} (baris ke-4. Di dalam data geometri, terdapat empat data berbeda, masing-masing secara berurutan adalah panjang jejari \textit{pebble} terluar, OPyC (\textit{Outer Pyrolitic Carbon}), SiC (\textit{Silicon Carbide}), IPyC (\textit{Inner Pyrolitic Carbon}), \textit{buffer} dan kernel. Data geometri akan digunakan untuk menghitung volume setiap elemen pelapis (Gambar \ref{fig:pelapis}). Yang perlu diperhatikan adalah data jari-jari yang disajikan adalah jarak dari pusat bahan bakar sampai titik terluar dari setiap lapisan. Karena itu, volume suatu lapisan harus mempertimbangkan lapisan-lapisan di dalamnya. Data geometri disimpan dalam variabel diberi nama \texttt{dimensi} dan dalam bentuk \texttt{list} (baris ke-9).
+  \item Data tentang geometri \textit{pebble}. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusGeometry} (baris ke-4. Di dalam data geometri, terdapat empat data berbeda, masing-masing secara berurutan adalah panjang jejari \textit{pebble} terluar, OPyC (\textit{Outer Pyrolitic Carbon}), SiC (\textit{Silicon Carbide}), IPyC (\textit{Inner Pyrolitic Carbon}), \textit{buffer} dan kernel. Data geometri akan digunakan untuk menghitung volume setiap elemen pelapis (Gambar \ref{fig:bentukpebble}). Yang perlu diperhatikan adalah data jari-jari yang disajikan adalah jarak dari pusat bahan bakar sampai titik terluar dari setiap lapisan. Karena itu, volume suatu lapisan harus mempertimbangkan lapisan-lapisan di dalamnya. Data geometri disimpan dalam variabel diberi nama \texttt{dimensi} dan dalam bentuk \texttt{list} (baris ke-9).
   \item Data tentang kekuatan SiC. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusCharacteristics} (baris ke-5 pada Listing \ref{InputData.py}). Ada empat nilai yang perlu dibaca terkait kekuatan SiC, masing-masing adalah SiC \textit{Tensile Strength} [Pa],	\textit{Weibull Modulus	Burnup} [FIMA],	\textit{Fission Yield of stable fission gasses} [Ff],	\textit{Fast Neutron Fluence}	dan rasio berat Th terhadap U-235 pada kernel. Data terkait kekuatan SiC disimpan dalam variabel yang diberi nama \texttt{characteristics} dalam bentuk \texttt{list} (baris ke-10).
     \item Data tentang sejarah irradiasi. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusIrradiation} (baris ke-6 pada Listing \ref{InputData.py}). Data ini merupakan data temperatur bahan bakar \textit{pebble} pada selang waktu tertentu. Sebagai contoh, data yang disajikan pada Lampiran 1 diambil pada selang waktu 17 hari. Data sejarah irradiasi disimpan dalam variabel yang diberi nama \texttt{irradiation} dalam bentuk \texttt{list}. Setiap elemen adalah \texttt{list} yang secara \textit{nested} terdiri dari dua elemen yang mewakili data kolom kedua dan ketiga tiap akuisisi (baris ke-11). Ilustrasinya adalah seperti $[[0,	593], [1468800,	833], \ldots]$ dengan informasi waktu pengukuran dalam satuan detik. Data tentang nomor urut tidak digunakan karena selain tidak diperlukan dalam perhitungan, akan menyulitkan proses interpolasi yang akan diterapkan berikutnya.
     \item Data tentang sejarah kecelakaan. Data ini diidentifikasi menggunakan teks yang didefinisikan oleh variabel \texttt{statusAccident} (baris ke-7). Data ini memiliki pola yang sama dengan data sejarah irradiasi. Data sejarah keselakaan disimpan dengan cara yang sama seperti data tentang sejarah irradiasi tetapi dengan nama \texttt{accident} (baris ke-12). Ilustrasinya adalah seperti $[[0,	1033], [2341.44,	1033],\ldots]$ dengan informasi waktu pengukuran dalam satuan detik.
@@ -421,38 +517,221 @@ Interpolasi yang diterapkan dapat diilustrasikan dalam Gambar \ref{fig:interpola
 
 
 \section{TRIAC Core}
-Terdapat empat fungsi di dalam modul \texttt{core.py} seperti terlihat pada Listing \ref{core.py}. Fungsi-fungsi yang terdapat dalam modul ini dianggap sebagai fungsi yang sering digunakan dan relatif kompleks jika diletakkan dalam program utama TRIAC. Berikut adalah penjelasannya.
+Modul ini adalah modul yang diterapkan dalam bentuk \textit{class} seperti terlihat pada Listing \ref{core.py}. Modul ini dipersiapkan menjadi modul utama dalam TRIAC, baik ketika melibatkan perhitungan LHS maupun tidak.
 
+Modul untuk perhitungan TRIAC dibuat dalam bentuk class yang menjalankan sejumlah fungsi dan menyimpan beberapa parameter dan konstanta yang diperlukan dalam perhitungan. Konstanta dan parameter diinisiasi dalam fungsi \texttt{\_\_init\_\_} serta dilengkapi sejumlah fungsi untuk memodifikasi nilainya. Berikut adalah konstanta dan parameter yang terlibat. Dari daftar tersebut, hanya \texttt{R} yang tidak memiliki fungsi modifikasi. Sedangkan \texttt{r} dan \texttt{d0} dimodifikasi melalui fungsi yang sama karena keduanya membutuhkan argumen yang sama. Yang selanjutnya masuk dalam kategori parameter adalah waktu (tb) dan temperatur irradiasi (Tb). Hal ini disebabkan karena parameter tersebut dihitung satu kali untuk kemudian digunakan dalam perhitungan fraksi gagal partikel triso di setiap \textit{mesh} waktu kecelakaan.
 \begin{enumerate}
-\item \texttt{OPF (irradiation,y,tb)} (baris ke-3 s/d 15). Fungsi tersebut membutuhkan tiga argumen, dengan argumen pertama adalah sejarah irradiasi dalam bentuk array. Jika melihat contoh yang disajikan pada Lampiran \ref{lamp:inputExample}, data tersebut terletak setelah baris berisi \texttt{INPUT: Irradiation Temp. Hystory}. Array akan berdimensi dua, yaitu setiap elemen array merupan array dengan dua elemen, masing-masing adalah waktu (dalam detik) dan temperatur irradiasi.
+   \item \texttt{R}, konstanta gas, $8.3143 \left[\frac{J}{mole \cdot K}\right]$
+   \item \texttt{Ff}, produk fisi yang dihasilkan dari gas fisi stabil
+   \item \texttt{Fb}, \textit{burnup} logam berat / FIMA
+   \item \texttt{Vm}, volume molar dalam partikel kernel yang dipengaruhi oleh material kernel,  $\left[\frac{m^3}{mole} \right]$
+   \item \texttt{m00}, parameter weibull bahan bakar sebelum digunakan
+   \item \texttt{r} (rerata jari-jari lapisan SiC) dan \texttt{d0} (ketebalan awal lapisan SiC)
+   \item \texttt{sigma0}, \textit{tensile strength} SiC di akhir irradiasi [Pa]
+   \item \texttt{Vk}, volume kernel [$m^3$]
+   \item \texttt{Vf}, fraksi void, $0.5$ volume buffer.
+   \item \texttt{tb}, waktu irradiasi, detik
+   \item \texttt{Tb}, temperatur rerata irradiasi, $^{o}C$
+   \item $\Gamma$, fluence neutron cepat, $10^{25} m^{-2} $ EDN
+ \end{enumerate} 
 
-Argumen kedua, $y$ adalah rentang waktu pengukuran ketika massa irradiasi. Contoh pada Lampiran 1 menunjukkan bahwa pengukuran dilakukan setiap 17 hari. Ketika kita ingin rentang pengukuran ini lebih kecil dari 17, maka kita dapat memperolehnya dengan fungsi interpolasi. Waktu interpolasi ini harus dalam satuan detik. Sedangkan argumen ketiga adalah total masa irradiasi, yang dalam contoh Lampiran 1 adalah 1020 hari.
+Sedangkan daftar fungsi yang terdapat dalam class \texttt{Core} adalah sebagai berikut.
+\begin{enumerate}
+  \item Perhitungan volume lapiran triso.
+  \begin{itemize}
+    \item Nama fungsi: \texttt{volume}
+    \item Argumen: \texttt{radius} (jari-jari lapisan partikel triso) 
+    \item Formula yang dikerjakan: $v=\frac{4}{3}\;\pi\;radius^2$
+    \item \textit{Return value}: \texttt{v}
+  \end{itemize}
+  \item OPF (\textit{Oxygen Per Fission})
+  \begin{itemize}
+    \item Nama fungsi: \texttt{OPF}
+    \item Argumen: \texttt{irradiation,y}
+    \begin{itemize}
+      \item \texttt{irradiation}: \textit{array} berdimensi dua, dengan kolom pertama adalah waktu dengan satuan detik sedangkan kolom kedua adalah temperatur dengan satuan $^{o}C$
+      \item \texttt{y}: rentang waktu pengukuran sejarah irradiasi dengan satuan detik. Dikaitkan dengan argumen \texttt{irradiation}, maka \texttt{y} adalah rentang waktu antara dua waktu berurutan di dalamnya.
+    \end{itemize}
+    \item Formula yang dikerjakan: Listing \ref{OPF}
+    \item \textit{Return value}: \texttt{z}
+    
+\scriptsize
+\begin{lstlisting}[language=python, numbers=left, numberstyle=\tiny, caption=Fungsi OPF, showstringspaces=false, label=OPF]
+def OPF(self,irradiation,y):
+	x=len(irradiation)
+	print("Irradiation length:",x)
+	z=0.0
+	for i in range(x):
+		j=irradiation[i]
+		a1=self.R*j[1]
+		a=-163000/(a1)
+		b=math.exp(a)
+		g=2*(8.32e-11)*b
+		g1=g*(self.tb-j[0])*y
+		z=z+g1
+  return z
+\end{lstlisting}
+\normalsize
+  \end{itemize}
+  \item $F_{\tau}$
+  \begin{itemize}
+    \item Nama fungsi: \texttt{FTau}
+    \item Argumen: \texttt{tau}, salah satu parameter dalam sejumlah formula empiris pada PANAMA \cite{report1}
+    \item Formula yang dikerjakan: Listing \ref{FTau}
+    \item \textit{Return value}: \texttt{ftau}
+    
+\scriptsize
+\begin{lstlisting}[language=python, numbers=left, numberstyle=\tiny, caption=Fungsi FTau, showstringspaces=false, label=FTau]    
+def FTau(self,tau):
+	looping=0.0
+	for n in range (1,2000):
+		pangkat=math.pow(n,2)*math.pow(math.pi,2)*tau
+		A=math.exp(-(pangkat))
+		B=math.pow(n,4)*math.pow(math.pi,4)
+		looping=looping+((1-A)/B)			
+	ftau=1-((6/tau)*looping)
+	return ftau
+\end{lstlisting}
+\normalsize
+    
+  \end{itemize}
+  \item DS
+  \begin{itemize}
+    \item Nama fungsi: \texttt{DS}
+    \item Argumen: \texttt{T}, temperatur dalam $^{o}C$
+    \item Formula yang dikerjakan: Listing \ref{DS}
+    \item \textit{Return value}: \texttt{ds}
+    
+\scriptsize
+\begin{lstlisting}[language=python, numbers=left, numberstyle=\tiny, caption=Fungsi DS, showstringspaces=false, label=DS]
+def DS(self,T):
+	logDS=-2.3-(8116/T)
+	ds=math.pow(10,logDS)
+	return ds
+\end{lstlisting}
+\normalsize
 
-Fungsi OPF akan menghitung akumulasi nilai $g$ untuk setiap perubahan temperatur dan waktu irradiasi seperti dijelaskan pada persamaan (\ref{eq:gt}). Akumulasi nilai $g$ tersebut adalah nilai OPF seperti dijelaskan pada persamaan (\ref{eq:opf1}). Itu sebabnya kenapa fungsi ini diberi nama \texttt{OPF}.
+  \end{itemize}
+  \item OPF Accident
+  \begin{itemize}
+    \item Nama fungsi: \texttt{OPFAccident}
+    \item Argumen:
+    \begin{itemize}
+      \item \texttt{T}: temperatur ketika terjadi kecelakaan, $^{o}C$
+    \end{itemize}
+    \item Formula yang dikerjakan: Listing \ref{OPFAccident}
+    \item \textit{Return value}: \texttt{opfa}
+    
+\scriptsize
+\begin{lstlisting}[language=python, numbers=left, numberstyle=\tiny, caption=Fungsi OPFAccident, showstringspaces=false, label=OPFAccident]
+def OPFAccident(self,T):	
+	logOPF=-10.08-(8500/self.Tb)+(2*math.log10(self.tb))-
+	(0.404*((10000/T)-(10000/(self.Tb+75))))
+	opfa=math.pow(10,logOPF)
+	return opfa
+\end{lstlisting}
+\normalsize
+  \end{itemize}
 
-Kemudian, nilai OPF digunakan untuk menghitung nilai $Tb$ seperti dijelaskan persamaan (\ref{eq:TB}). Nilai $Tb$ selanjutnya digunakan untuk menghitung nilai $ds$ seperti dijelaskan persamaan (\ref{eq:DS}) dan diterapkan oleh fungsi \texttt{DS} (baris ke-31 s/d 34 Listing \ref{core.py}). Akhirnya, nilai $\tau_i$ diperoleh dari nilai $ds$ seperti dijelaskan persamaan (\ref{eq:taui}). Tetapi, rentetan perhitungan tersebut tidak dilakukan di fungsi \texttt{OPF}, melainkan dalam program \texttt{triac.py} seperti pada Listing \ref{triac.py}. Fungsi yang dibuat diusahakan untuk hanya mengerjakan satu fungsi saja.
-
-\item \texttt{FTau (tau)} (baris ke-17 s/d 25). Fungsi ini digunakan untuk menghitung nilai $f_{\tau}$ seperti dijelaskan pada persamaan (\ref{eq:ftau}). Fungsi ini menerapkan nilai $2000$ sebagai batas atas iterasi.
-
-\item \texttt{OPFAccident (Tb,tb,T)} (baris ke-27 s/d 30). Fungsi ini akan menerima argumen kondisi kecelakaan melalui argumen ketiga ($T$). Sedangkan argumen pertama ($Tb$) diperoleh dari fungsi pertama, \texttt{OPF}.
-
-\item \texttt{DS(T)} (baris ke-32 s/d 35). Fungsi ini adalah fungsi perantara untuk mendapatkan nilai $\tau_i$.
-
-\item \texttt{volume(r)}. Fungsi ini digunakan untuk menghitung volume setiap lapisan partikel triso.
-
-\item \texttt{weibullParam(Tb,T,t,m00,gamma)}. Fungsi ini digunakan untuk menghitung parameter $m$ seperti dijelaskan oleh persamaan (\ref{eq:grainBoundary}). Fungsi ini digunakan sejak perhitungan memasuki kondisi kecelakaan. Diperlukan 4 argumen untuk mengeksekusi fungsi ini, masing-masing adalah $T_b$ (diperoleh dari perhitungan terhadap sejarah irradiasi), $T$ dan $t$ (masing-masing adalah temperatur dan waktu sejak terjadinya kecelakaan), $m_{oo}$ (parameter yang menggambarkan distribusi Weibull \textit{tensile strength} untuk semua partikel triso sebelum diirradiasi), serta $\Gamma$.
-
-\item \texttt{tekanan(Fd,opf,Vk,T,Vf)} (baris ke-51 s/d 56). Diperlukan 5 argumen untuk menghitung nilai tekanan yang telah dijelaskan di persamaan (\ref{eq:tekanan}). Khusus untuk argumen $opf$, nilainya diperoleh dari fungsi \texttt{OPFAccident}.
-
-\item \texttt{sigmaT(r,p,d,t,T)} (baris ke-58 s/d 61). Diperlukan 5 argumen untuk menghitung nilai $\sigma_t$. Argumen $r$ dan $d$ adalah parameter yang dijelaskan di persamaan (\ref{eq:sigmaT}). Khusus untuk argumen $d$, di persamaan (\ref{eq:sigmaT}) dinyatakan sebagai $d_0$. Argumen $t$ dan $T$ adalah waktu dan temperatur setelah terjadinya kecelakaan. Khusus untuk argumen $T$, nilainya tidak serta-merta sesuai dengan waktu $t$. Seperti dijelaskan pada Gambar \ref{fig:pertumbuhanPhi}, nilai temperatur yang digunakan dalam perhitungan adalah nilai rata-rata dari dua waktu akuisisi data yang beriringan. Sedangkan argumen $p$ adalah variabel tekanan yang telah dijelaskan sebelumnya.
-
-\item \texttt{phi(sigma0, sigmaT, m)} (baris ke-63 s/d 67). Parameter inilah yang menjadi fokus triac, yaitu memprediksi fraksi gagal partikel triso seperti telah dijelaskan di persamaan (\ref{eq:gagal}). 
+  \item Parameter weibull
+  \begin{itemize}
+    \item Nama fungsi: \texttt{weibullParam}
+    \item Argumen:
+    \begin{itemize}
+      \item \texttt{T}: temperatur ketika terjadi kecelakaan, $^{o}C$
+      \item \texttt{t}: waktu ketika terjadi kecelakaan, detik 
+    \end{itemize}
+    \item Formula yang dikerjakan: Listing \ref{weibull}
+    \item \textit{Return value}: \texttt{m}
+    \item Catatan: pada penerapannya, perhitungan ini tidak dilakukan. Jika dilibatkan dalam perhitungan, maka fraksi gagal partikel triso akan lebih besar daripada hasil yang diperoleh PANAMA. Meskipun hal itu logis, karena temperatur yang lebih tinggi akan meningkatkan potensi kerusakan partikel triso, tetapi tahap awal pengembangan TRIAC mentargetkan sedekat mungkin hasil yang diperoleh dengan PANAMA. Karena itu, diasumsikan bahwa parameter weibull tidak berubah selama kecelakaan terjadi. Seperti terlihat pada Listing \ref{core.py}, fungsi untuk menghitung parameter weibull terkini tidak dijalankan, dan hanya bertugas mengembalikan nilai parameter, tepat saat dimulainya kecelakaan ($m_0$).
+    
+\scriptsize
+\begin{lstlisting}[language=python, numbers=left, numberstyle=\tiny, caption=Fungsi weibullParam, showstringspaces=false, label=weibull]
+def weibullParam(self,T,t):
+	logGammaM=0.394+(650/self.Tb)
+	gammaM=math.pow(10,logGammaM)
+	m0=self.m00*(1-(self.Fluence/gammaM))
+	a=-187400/(self.R*T)
+	b=math.pow(math.e,a)
+	etaDot=0.565*b
+	c=math.pow(math.e,-etaDot*t)
+	m=m0*(0.44+(0.56*c))
+	return m
+\end{lstlisting}
+\normalsize
+  \end{itemize}
+  
+  \item tekanan
+  \begin{itemize}
+    \item Nama fungsi: \texttt{tekanan}
+    \item Argumen:
+    \begin{itemize}
+      \item \texttt{Fd}: fraksi gas fisi yang lepas
+      \item \texttt{opf}: \textit{oxygen per fission} saat terjadi kecelakaan
+      \item \texttt{T}: temperatur ketika terjadi kecelakaan, $^{o}C$
+    \end{itemize}
+    \item Formula yang dikerjakan: Listing \ref{tekanan}
+    \item \textit{Return value}: \texttt{p}
+    
+\scriptsize
+\begin{lstlisting}[language=python, numbers=left, numberstyle=\tiny, caption=Fungsi tekanan, showstringspaces=false, label=tekanan]
+def tekanan(self,Fd,opf,T):
+	p=((Fd*self.Ff)+opf)*self.Fb*(self.Vk/self.Vm)*self.R*T/self.Vf
+	return p
+\end{lstlisting}
+\normalsize
+  \end{itemize}
+  
+  \item $\sigma_T$
+  \begin{itemize}
+    \item Nama fungsi: \texttt{sigmaT}
+    \item Argumen:
+    \begin{itemize}
+      \item \texttt{p}: tekanan (Pa)
+      \item \texttt{t}: waktu terjadi kecelakaan, detik
+      \item \texttt{T}: temperatur ketika terjadi kecelakaan, $^{o}C$
+    \end{itemize}
+    \item Formula yang dikerjakan: Listing \ref{sigmaT}
+    \item \textit{Return value}: \texttt{a}
+    
+\scriptsize
+\begin{lstlisting}[language=python, numbers=left, numberstyle=\tiny, caption=Fungsi \textit{tensile strength} pada temperatur T, showstringspaces=false, label=sigmaT]
+	def SIGMA_T(self,p,t,T):
+		nu=(5.87e-7)*math.exp(-179500/(self.R*T))
+		a=(self.r*p/(2*self.d0))*(1+(nu*t/self.d0))
+		return a
+\end{lstlisting}
+\normalsize
+  \end{itemize}
+  
+  \item $\phi$
+  \begin{itemize}
+    \item Nama fungsi: \texttt{phi}
+    \item Argumen:
+    \begin{itemize}
+      \item \texttt{sigmaT}: \textit{tensile strength} pada temperatur \texttt{T}
+      \item \texttt{m}: parameter weibull
+    \end{itemize}
+    \item Formula yang dikerjakan: Listing \ref{phi}
+    \item \textit{Return value}: \texttt{d}
+    
+\scriptsize
+\begin{lstlisting}[language=python, numbers=left, numberstyle=\tiny, caption=Fungsi fraksi gagal partikel triso, showstringspaces=false, label=phi]
+	def PHI(self,sigmaT, m):
+		a=sigmaT/self.sigma0
+		b=math.pow(a,m)
+		c=math.log(2)*b
+		d=1-math.exp(-c)
+		return d
+\end{lstlisting}
+\normalsize
+  \end{itemize}
 \end{enumerate}
 
 
 
 \section{Perhitungan TRIAC}
-Bagian ini adalah inti dari perhitungan TRIAC yang alur eksekusinya diilustrasikan pada Gambar \ref{fig:flowchart}. Sedangkan hubungan interaksi antar fungsi untuk mendapatkan nilai fraksi gagal partikel triso setelah sekian waktu sejak terjadi kecelakaan dapat diilustrasikan seperti Gambar \ref{fig:interaksiformula}. Kotak dengan warna merah, kuning dan hijau pada Gambar \ref{fig:interaksiformula} menunjukkan formula-formula yang hasilnya menjadi masukan untuk formula pada kotak berwarna biru. Sementara angka di bawah kotak-kotak tersebut adalah nomor formula dalam dokumen PANAMA \cite{report1}.
+Bagian ini adalah bagian pengendali dari perhitungan TRIAC yang alur eksekusinya diilustrasikan pada Gambar \ref{fig:flowchart}. Sedangkan hubungan interaksi antar fungsi untuk mendapatkan nilai fraksi gagal partikel triso setelah sekian waktu sejak terjadi kecelakaan dapat diilustrasikan seperti Gambar \ref{fig:interaksiformula}. Kotak dengan warna merah, kuning dan hijau pada Gambar \ref{fig:interaksiformula} menunjukkan formula-formula yang hasilnya menjadi masukan untuk formula pada kotak berwarna biru. Sementara angka di bawah kotak-kotak tersebut adalah nomor formula dalam dokumen PANAMA \cite{report1}.
 
 \begin{figure}[h]
   \begin{center}
@@ -475,14 +754,41 @@ Sedangkan Gambar \ref{fig:interaksiformula2} merupakan kelanjutan dari interaksi
   \end{center}
 \end{figure}
 
-Program ini akan menerima dua argumen selain nama programnya sendiri, yaitu nama \textit{file input} (baris ke-8) serta jumlah interpolasi yang diinginkan (baris ke-9) dalam rentang pengukuran yang sudah ada. Tetapi, jika pengguna tidak memberikan argumen tersebut, program akan dieksekusi dengan \textit{file input} dan jumlah interpolasi yang telah ditetapkan (baris ke-11 dan 12).
+Program ini dirancang untuk dapat menerima tiga kombinasi argumen, masing-masing adalah eksekusi TRIAC tanpa perhitungan LHS, dengan LHS dan tanpa argumen yang berarti telah ada \textit{file input} yang terdefinisi lengkap dengan tambahan untuk \textit{meshing} interpolasi.
 
-Proses selanjutnya adalah membaca informasi dari \textit{file input}. Ada lima informasi yang harus diperoleh dari \textit{file input}, masing-masing adalah
-informasi geometri, karakteristik material, sejarah irradiasi dan kecelakaan serta rentang pengukuran temperatur saat irradiasi. Setelah data-data tersebut diperoleh, langkah selanjutnya adalah perhitungan geometri partikel triso. Proses ini dilakukan dalam baris ke-23 s/d 37.
+Proses selanjutnya adalah membaca informasi dari \textit{file input}. Ada lima informasi yang harus diperoleh dari \textit{file input}, masing-masing adalah informasi geometri, karakteristik material, sejarah irradiasi dan kecelakaan serta rentang pengukuran temperatur saat irradiasi. Setelah data-data tersebut diperoleh, langkah selanjutnya adalah perhitungan geometri partikel triso. Kemudian, agar perhitungan dapat dilakukan, perlu dilakukan inisiasi obyek dari \textit{class} \texttt{core.py}. Setelah obyek tersebut diinisiasi, semua perhitungan seperti ditunjukkan dalam Gambar \ref{fig:flowchart} dilakukan.
 
-Langkah selanjutnya setelah perhitungan geometri adalah interpolasi. Tetapi, karena opsi tanpa interpolasipun harus diakomodasi, maka ada kondisi yang harus dipenuhi seperti pada baris ke-44 dan baris ke-96. Jika nilai $dt>1$, maka interpolasi harus dilakukan.
+Seperti telah dijelaskan dalam sub bab \ref{sec:introPenerapan}, TRIAC menjalankan perhitungan pada kondisi irradiasi (Gambar \ref{fig:irradiasi}) dan kecelakaan (Gambar \ref{fig:accident}). Perhitungan pada kondisi irradiasi akan menghasilkan $T_B$ yang secara bertahap diperoleh dari \textit{mesh} sejarah irradiasi kemudian $OPF$. Selanjutnya, nilai $T_B$ akan digunakan untuk menghitung $\tau_i$, $\sigma_0$ dan $m_0$. Kemudian, perhitungan di kondisi irradiasi juga menghasilkan volume setiap layer dalam partikel triso, khususnya volume dua lapisan terdalam (kernel dan buffer, lihat Gambar \ref{fig:bentukpebble}). Nilai-nilai tersebut digunakan dalam perhitungan ketika kondisi kecelakaan terjadi, hingga akhirnya diketahui fraksi gagal partikel triso. 
 
+Yang menarik adalah model yang dikembangkan oleh PANAMA di kondisi kecelakaan yang melakukan perhitungan semua parameter di setiap \textit{mesh} sejarah kecelakaan. Hal ini berbeda ketika perhitungan dilakukan di kondisi irradiasi, hanya diperoleh nilai antara untuk selanjutnya diperoleh hasil akhir berupa $T_B$. Dari $T_B$ inilah nantinya diperoleh $\tau_i$, $\sigma_0$ dan $m_0$. Kondisi ini sejalan dengan model pertumbuhan fraksi gagal $\phi_1$ yang selalu mengacu pada kondisi awal kecelakaan (akhir irradiasi). Seperti ditunjukkan di Gambar \ref{fig:interaksiformula2}, selalu ada parameter $T_B$, $\tau_i$ dalam perhitungan nilai OPF kecelakaan, $Fd$ dan tekanan internal ($p$). Juga $\sigma_0$ dan $m_0$ dalam perhitungan $\sigma_t$ dan $\phi_1$ (Gambar \ref{fig:accident}).
 
+\chapter{Pengujian perhitungan TRIAC}
+\section{Pendahuluan}
+Pengujian dilakukan dengan membandingkan hasil perhitungan TRAIC dengan PANAMA untuk data \textit{file input} seperti dalam Lampiran \ref{lamp:inputExample}. Khusus untuk hasil PANAMA, hanya terdapat hasil plot kondisi pengujian yang terdapat dalam dokumen teknis \cite{report1} (Gambar \ref{fig:benchmark1}). Dari gambar tersebut, direkonstruksi titik-titik hubungan antara waktu (jam) di sumbu (x) terhadap $\phi_1$ di sumbu (y). Karena itu, hasil pengujian TRIAC akan sangat tergantung dengan ketelitian dalam merekonstruksi titik tersebut. 
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[scale=.45]{pics/benchmarkPANAMA.png}
+    \caption[Hasil perhitungan PANAMA untuk berbagai kondisi pengujian]{Hasil perhitungan PANAMA untuk berbagai kondisi pengujian \cite{report1}}
+    \label{fig:benchmark1}
+  \end{center}
+\end{figure}
+
+\section{Hasil pengujian}
+Seperti ditunjukkan Gambar \ref{fig:benchmark1}, kondisi pengujian adalah sebagai berikut. Hasilnya ditunjukkan pada Gambar \ref{fig:compareinit}.
+\begin{enumerate}
+  \item Kondisi kecelakaan DLOFC (\textit{Depressurized Loss Of Forced Cooling}) seperti kondisi \textit{mesh} sejarah kecelakaan yang sama dengan data di Lampiran \ref{lamp:inputExample}
+  \item Kondisi DLOFC dengan \textit{mesh} sejarah kecelakaan sebelumnya ditambah $100^o$C
+  \item Kondisi \textit{mesh} sejarah kecelakaan yang stabil di angka $1600^o$C
+\end{enumerate}
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[scale=.35]{pics/compareinit.png}
+    \caption{PANAMA vs. TRIAC-BATAN for three accident scenarios}
+    \label{fig:compareinit}
+  \end{center}
+\end{figure}
 
 % Daftar Pustaka
 \bibliographystyle{IEEEtran}
