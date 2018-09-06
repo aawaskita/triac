@@ -72,7 +72,7 @@ M.~D. Shields and J.~Zhang, ``The generalization of latin hypercube sampling,''
   19-03-2018.
 
 \bibitem{report2}
-S.~S. K. J. J.~C. William K.~Terry, Leland M.~Montierth and A.~M. Ougouag,
+W.~K. Terry, L.~M. Montierth, S.~S. Kim, J.~J. Cogliati, and A.~M. Ougouag,
   ``Evaluation of the initial critical configuration of the htr-10 pebble-bed
   reactor,'' Idaho National Lab, US, Tech. Rep., 2006.
 
@@ -80,5 +80,10 @@ S.~S. K. J. J.~C. William K.~Terry, Leland M.~Montierth and A.~M. Ougouag,
 N.~A. Wahanani, ``Dokumentasi program latin hypercube sampling untuk analisa
   ketidakpastian,'' bidang Komputasi, Pusat Pengembangan Informatika Nuklir -
   BATAN.
+
+\bibitem{triac}
+A.~A. Waskita and T.~Setiadipura, ``The development of triac-batan: a triso
+  fuel performance analysis code,'' in \emph{Symposium of Emerging Nuclear
+  Technology and Engineering Novelty}, 2018.
 
 \end{thebibliography}

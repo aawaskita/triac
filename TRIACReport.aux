@@ -89,14 +89,14 @@
 \newlabel{fig:pertumbuhanPhi}{{2.2}{9}{Hubungan antara waktu dan temperatur pada perhitungan $\phi _1$}{figure.2.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.6.3}Pertumbuhan fraksi gagal}{9}{subsection.2.6.3}}
 \newlabel{eq:fraksigagal}{{2.25}{9}{Pertumbuhan fraksi gagal}{equation.2.6.25}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.7}Simulasi LHS}{9}{section.2.7}}
-\newlabel{sec:lhs}{{2.7}{9}{Simulasi LHS}{section.2.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.7}Modul \textit  {sampling}}{9}{section.2.7}}
+\newlabel{sec:lhs}{{2.7}{9}{Modul \textit {sampling}}{section.2.7}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.7.1}Pendahuluan}{9}{subsection.2.7.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.2}Opsi distribusi}{9}{subsection.2.7.2}}
 \@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces Nilai nominal dan variasinya pada komposisi partikel triso}}{10}{table.2.2}}
 \newlabel{tab:variasi}{{2.2}{10}{Nilai nominal dan variasinya pada komposisi partikel triso}{table.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.2}Opsi distribusi}{10}{subsection.2.7.2}}
 \newlabel{eq:pm}{{2.26}{10}{Opsi distribusi}{equation.2.7.26}{}}
-\newlabel{eq:X}{{2.27}{10}{Opsi distribusi}{equation.2.7.27}{}}
+\newlabel{eq:X}{{2.27}{11}{Opsi distribusi}{equation.2.7.27}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.7.3}Fungsi \textit  {inverse} untuk mendapatkan nilai $X$}{11}{subsection.2.7.3}}
 \newlabel{sec:finverse}{{2.7.3}{11}{Fungsi \textit {inverse} untuk mendapatkan nilai $X$}{subsection.2.7.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.7.4}Alur eksekusi}{11}{subsection.2.7.4}}
@@ -104,9 +104,10 @@
 \newlabel{fig:total}{{2.3}{12}{Diagram aktifitas eksekusi TRIAC}{figure.2.3}{}}
 \citation{report1}
 \citation{report1}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Penerapan}{13}{chapter.3}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Penerapan TRIAC}{13}{chapter.3}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{sec:implementasitriac}{{3}{13}{Penerapan TRIAC}{chapter.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}Pendahuluan}{13}{section.3.1}}
 \newlabel{sec:introPenerapan}{{3.1}{13}{Pendahuluan}{section.3.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Hubungan ketergantungan antar variabel di fase irradiasi}}{13}{figure.3.1}}
@@ -145,6 +146,7 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Interaksi antar fungsi untuk mendapatkan nilai tekanan yang dialami lapisan silikon karbida}}{22}{figure.3.5}}
 \newlabel{fig:interaksiformula2}{{3.5}{22}{Interaksi antar fungsi untuk mendapatkan nilai tekanan yang dialami lapisan silikon karbida}{figure.3.5}{}}
 \citation{report1}
+\citation{triac}
 \citation{report1}
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Pengujian perhitungan TRIAC}{23}{chapter.4}}
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -152,11 +154,59 @@
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}Pendahuluan}{23}{section.4.1}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Hasil perhitungan PANAMA untuk berbagai kondisi pengujian}}{23}{figure.4.1}}
 \newlabel{fig:benchmark1}{{4.1}{23}{Hasil perhitungan PANAMA untuk berbagai kondisi pengujian}{figure.4.1}{}}
-\bibstyle{IEEEtran}
-\bibdata{report}
 \@writefile{toc}{\contentsline {section}{\numberline {4.2}Hasil pengujian}{24}{section.4.2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces PANAMA vs. TRIAC-BATAN for three accident scenarios}}{24}{figure.4.2}}
 \newlabel{fig:compareinit}{{4.2}{24}{PANAMA vs. TRIAC-BATAN for three accident scenarios}{figure.4.2}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Penerapan modul \textit  {sampling}}{25}{chapter.5}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Pendahuluan}{25}{section.5.1}}
+\newlabel{sec:introsampling}{{5.1}{25}{Pendahuluan}{section.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Keterkaitan antar class dalam modul \textit  {sampling}}}{25}{figure.5.1}}
+\newlabel{fig:samplingclass}{{5.1}{25}{Keterkaitan antar class dalam modul \textit {sampling}}{figure.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagram \textit  {sequence} eksekusi layanan antar class yang melibatkan modul \textit  {sampling}}}{26}{figure.5.2}}
+\newlabel{fig:sequence}{{5.2}{26}{Diagram \textit {sequence} eksekusi layanan antar class yang melibatkan modul \textit {sampling}}{figure.5.2}{}}
+\newlabel{RF1}{27}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Nilai nominal dan ketidakpastiannya pada lapisan triso}}{27}{table.5.1}}
+\newlabel{tab:uncertainty}{{5.1}{27}{Nilai nominal dan ketidakpastiannya pada lapisan triso}{table.5.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Pembacaan \textit  {file input}}{28}{section.5.2}}
+\newlabel{sec:inputlhs}{{5.2}{28}{Pembacaan \textit {file input}}{section.5.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Trigger ke modul \textit  {sampling}}{28}{section.5.3}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Pengujian modul \textit  {sampling}}{29}{chapter.6}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Pendahuluan}{29}{section.6.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Hasil pengujian}{29}{section.6.2}}
+\newlabel{fig:unifLHS}{{6.1(a)}{30}{Subfigure 6 6.1(a)}{subfigure.6.1.1}{}}
+\newlabel{sub@fig:unifLHS}{{(a)}{30}{Subfigure 6 6.1(a)\relax }{subfigure.6.1.1}{}}
+\newlabel{fig:unifSRS}{{6.1(b)}{30}{Subfigure 6 6.1(b)}{subfigure.6.1.2}{}}
+\newlabel{sub@fig:unifSRS}{{(b)}{30}{Subfigure 6 6.1(b)\relax }{subfigure.6.1.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces Distribusi \textit  {sample} yang diperoleh menggunakan distribusi \textit  {uniform} serta metode (a). LHS dan (b). SRS}}{30}{figure.6.1}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{30}{figure.6.1}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{30}{figure.6.1}}
+\newlabel{fig:triLHS}{{6.2(a)}{31}{Subfigure 6 6.2(a)}{subfigure.6.2.1}{}}
+\newlabel{sub@fig:triLHS}{{(a)}{31}{Subfigure 6 6.2(a)\relax }{subfigure.6.2.1}{}}
+\newlabel{fig:triSRS}{{6.2(b)}{31}{Subfigure 6 6.2(b)}{subfigure.6.2.2}{}}
+\newlabel{sub@fig:triSRS}{{(b)}{31}{Subfigure 6 6.2(b)\relax }{subfigure.6.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces Distribusi \textit  {sample} yang diperoleh menggunakan distribusi triangular serta metode (a). LHS dan (b). SRS}}{31}{figure.6.2}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{31}{figure.6.2}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{31}{figure.6.2}}
+\newlabel{fig:stdUnifLHS}{{6.3(a)}{32}{Subfigure 6 6.3(a)}{subfigure.6.3.1}{}}
+\newlabel{sub@fig:stdUnifLHS}{{(a)}{32}{Subfigure 6 6.3(a)\relax }{subfigure.6.3.1}{}}
+\newlabel{fig:stdUnifSRS}{{6.3(b)}{32}{Subfigure 6 6.3(b)}{subfigure.6.3.2}{}}
+\newlabel{sub@fig:stdUnifSRS}{{(b)}{32}{Subfigure 6 6.3(b)\relax }{subfigure.6.3.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.3}{\ignorespaces Nilai rerata dan $\sigma $ fraksi gagal partikel triso menggunakan metode $\sigma $ (a). LHS and (b). SRS dan distribusi \textit  {uniform}}}{32}{figure.6.3}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{32}{figure.6.3}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{32}{figure.6.3}}
+\newlabel{fig:stdTriLHS}{{6.4(a)}{33}{Subfigure 6 6.4(a)}{subfigure.6.4.1}{}}
+\newlabel{sub@fig:stdTriLHS}{{(a)}{33}{Subfigure 6 6.4(a)\relax }{subfigure.6.4.1}{}}
+\newlabel{fig:stdTriSRS}{{6.4(b)}{33}{Subfigure 6 6.4(b)}{subfigure.6.4.2}{}}
+\newlabel{sub@fig:stdTriSRS}{{(b)}{33}{Subfigure 6 6.4(b)\relax }{subfigure.6.4.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.4}{\ignorespaces Nilai rerata dan $\sigma $ fraksi gagal partikel triso menggunakan metode $\sigma $ (a). LHS and (b). SRS dan distribusi triangular}}{33}{figure.6.4}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{33}{figure.6.4}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{33}{figure.6.4}}
+\bibstyle{IEEEtran}
+\bibdata{report}
 \bibcite{wang2004integrated}{1}
 \bibcite{rde}{2}
 \bibcite{tsdipura}{3}
@@ -167,5 +217,6 @@
 \bibcite{lhs}{8}
 \bibcite{report2}{9}
 \bibcite{mbasinta}{10}
+\bibcite{triac}{11}
 \@input{markLampiran.aux}
 \@input{lampiran.aux}

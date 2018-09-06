@@ -11,12 +11,12 @@
 \BOOKMARK [2][-]{subsection.2.6.1}{Fraksi gagal akibat berkurangnya tensile strength}{section.2.6}% 11
 \BOOKMARK [2][-]{subsection.2.6.2}{Fraksi gagal bahan bakar akibat weight loss}{section.2.6}% 12
 \BOOKMARK [2][-]{subsection.2.6.3}{Pertumbuhan fraksi gagal}{section.2.6}% 13
-\BOOKMARK [1][-]{section.2.7}{Simulasi LHS}{chapter.2}% 14
+\BOOKMARK [1][-]{section.2.7}{Modul sampling}{chapter.2}% 14
 \BOOKMARK [2][-]{subsection.2.7.1}{Pendahuluan}{section.2.7}% 15
 \BOOKMARK [2][-]{subsection.2.7.2}{Opsi distribusi}{section.2.7}% 16
 \BOOKMARK [2][-]{subsection.2.7.3}{Fungsi inverse untuk mendapatkan nilai X}{section.2.7}% 17
 \BOOKMARK [2][-]{subsection.2.7.4}{Alur eksekusi}{section.2.7}% 18
-\BOOKMARK [0][-]{chapter.3}{Penerapan}{}% 19
+\BOOKMARK [0][-]{chapter.3}{Penerapan TRIAC}{}% 19
 \BOOKMARK [1][-]{section.3.1}{Pendahuluan}{chapter.3}% 20
 \BOOKMARK [1][-]{section.3.2}{Pembacaan file input}{chapter.3}% 21
 \BOOKMARK [1][-]{section.3.3}{TRIAC Core}{chapter.3}% 22
@@ -24,9 +24,21 @@
 \BOOKMARK [0][-]{chapter.4}{Pengujian perhitungan TRIAC}{}% 24
 \BOOKMARK [1][-]{section.4.1}{Pendahuluan}{chapter.4}% 25
 \BOOKMARK [1][-]{section.4.2}{Hasil pengujian}{chapter.4}% 26
-\BOOKMARK [0][-]{section*.7}{LAMPIRAN}{}% 27
-\BOOKMARK [0][-]{section*.8}{Lampiran 1}{}% 28
-\BOOKMARK [0][-]{section*.10}{Lampiran 2: InputData.py}{}% 29
-\BOOKMARK [0][-]{section*.12}{Lampiran 3: interpolasi.py}{}% 30
-\BOOKMARK [0][-]{section*.14}{Lampiran 4: core.py}{}% 31
-\BOOKMARK [0][-]{section*.16}{Lampiran 5: triac.py}{}% 32
+\BOOKMARK [0][-]{chapter.5}{Penerapan modul sampling}{}% 27
+\BOOKMARK [1][-]{section.5.1}{Pendahuluan}{chapter.5}% 28
+\BOOKMARK [1][-]{section.5.2}{Pembacaan file input}{chapter.5}% 29
+\BOOKMARK [1][-]{section.5.3}{Trigger ke modul sampling}{chapter.5}% 30
+\BOOKMARK [0][-]{chapter.6}{Pengujian modul sampling}{}% 31
+\BOOKMARK [1][-]{section.6.1}{Pendahuluan}{chapter.6}% 32
+\BOOKMARK [1][-]{section.6.2}{Hasil pengujian}{chapter.6}% 33
+\BOOKMARK [0][-]{section*.7}{LAMPIRAN}{}% 34
+\BOOKMARK [0][-]{section*.8}{Lampiran 1}{}% 35
+\BOOKMARK [0][-]{section*.10}{Lampiran 2: InputData.py}{}% 36
+\BOOKMARK [0][-]{section*.12}{Lampiran 3: interpolasi.py}{}% 37
+\BOOKMARK [0][-]{section*.14}{Lampiran 4: core.py}{}% 38
+\BOOKMARK [0][-]{section*.16}{Lampiran 5: triac.py}{}% 39
+\BOOKMARK [0][-]{section*.18}{Lampiran 6: LHScalculation.py}{}% 40
+\BOOKMARK [0][-]{section*.20}{Lampiran 7: lhs.py}{}% 41
+\BOOKMARK [0][-]{section*.22}{Lampiran 8: uniform.py}{}% 42
+\BOOKMARK [0][-]{section*.24}{Lampiran 9: triangle.py}{}% 43
+\BOOKMARK [0][-]{section*.26}{Lampiran 10: normal.py}{}% 44

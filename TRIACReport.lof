@@ -13,3 +13,19 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Hasil perhitungan PANAMA untuk berbagai kondisi pengujian}}{23}{figure.4.1}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces PANAMA vs. TRIAC-BATAN for three accident scenarios}}{24}{figure.4.2}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Keterkaitan antar class dalam modul \textit {sampling}}}{25}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagram \textit {sequence} eksekusi layanan antar class yang melibatkan modul \textit {sampling}}}{26}{figure.5.2}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Distribusi \textit {sample} yang diperoleh menggunakan distribusi \textit {uniform} serta metode (a). LHS dan (b). SRS}}{30}{figure.6.1}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{30}{figure.6.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{30}{figure.6.1}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Distribusi \textit {sample} yang diperoleh menggunakan distribusi triangular serta metode (a). LHS dan (b). SRS}}{31}{figure.6.2}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{31}{figure.6.2}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{31}{figure.6.2}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Nilai rerata dan $\sigma $ fraksi gagal partikel triso menggunakan metode $\sigma $ (a). LHS and (b). SRS dan distribusi \textit {uniform}}}{32}{figure.6.3}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{32}{figure.6.3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{32}{figure.6.3}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Nilai rerata dan $\sigma $ fraksi gagal partikel triso menggunakan metode $\sigma $ (a). LHS and (b). SRS dan distribusi triangular}}{33}{figure.6.4}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{33}{figure.6.4}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{33}{figure.6.4}

@@ -15,6 +15,9 @@
 \usepackage[version=4]{mhchem}
 \usepackage{isotope}
 \usepackage{datetime2}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{subfigure}
 \DTMsetdatestyle{ddmmyyyy}
 \DTMsetup{datesep=--}
 \newcommand{\subtitle}[1]{%
@@ -339,12 +342,14 @@ Disebutkan Verfondern \cite{report1}, nilai $\phi_1$ saat kecelakaan dimulai ($t
 
 Sebagai ilustrasi, saat menghitung nilai $\phi_1$ di $t=t_1$, maka diperlukan nilai $\phi_1(t_0, T_m)$ (nilai pertama) dan $\phi_1(t_1, T_m)$ (nilai kedua). Nilai pertama adalah fungsi irradiasi, sedangkan nilai kedua diperoleh dari persamaan (\ref{eq:gagal}) dengan parameter-parameter yang sesuai. Selisih keduanya akan menentukan nilai $\phi_1$ di titik $t=t_1$. Jika selisih nilai kedua dan pertama positif, selisih nilai tersebut diakumulasikan pada nilai $\phi_1$ di $t=t_0$. Tetapi jika sebaliknya, maka nilai $\phi_1$ di titik $t=t_1$ sama dengan nilai $\phi_1$ di titik $t=t_0$. Skenario yang sama berlaku untuk titik-titik waktu selanjutnya.
 
-\section{Simulasi LHS}
+\section{Modul \textit{sampling}}
 \label{sec:lhs}
 \subsection{Pendahuluan}
 \textit{Latin Hypercube Sampling} (LHS) saat ini telah menjadi metode sampling yang paling banyak digunakan dalam analisis keandalan dan ketidakpastian pada analisis sistem kompleks berbasis Monte-Carlo \cite{HELTON200323,SHIELDS201696}. LHS sendiri didefinisikan sebagai metode untuk menghasilkan \textit{sample} acak dari nilai parameter \cite{lhs}. Alasan LHS banyak digunakan dalam metode berbasis Monte Carlo adalah karena kemampuannya mengurangi jumlah eksekusi untuk memperoleh hasil yang cukup akurat.
 
 LHS dapat dimodelkan sebagai sebuah fungsi $y=f(x)$, dengan $f$ merepresentasikan model dari sistem yang sedang dikaji, $x=[x_1, x_2, \ldots]$ merupakan vektor input bagi model, dan $y=[y_1, y_2, \ldots]$ merupakan vektor prediksi model \cite{HELTON200323}. Tujuan dari analisis ketidakpastian ini adalah untuk menentukan ketidakpastian elemen $y$ sebagai akibat dari ketidakpastian elemen $x$. Dalam konteks TRIAC, LHS dapat digunakan untuk menentukan ketidakpastian fraksi gagal bahan bakar triso sebagai akibat ketidakpastian dimensi partikel tersebut. Tabel \ref{tab:variasi} menunjukkan contoh ketidakpastian parameter dalam partikel triso \cite{report2}
+
+TRIAC selanjutnya juga akan dilengkapi dengan SRS (Simple Random Sampling). LHS dan SRS selanjutnya digabung menjadi modul \textit{sampling} pada TRIAC.
 
 \begin{table}[h!] % <--
   \begin{center}
@@ -406,7 +411,7 @@ X=F^{-1}\left(P_m\right)
 \end{equation}
 
     \end{itemize}
-    \item Setelah sample untuk variabel $X$ diperoleh, variabel $Y$ dapat dihitung. Nilai $Y$ sesuai nilai setiap sample $X$ yang ada selanjutnya dirata-rata dan dihitung variannya ($\sigma$).
+    \item Setelah sample untuk variabel $X$ diperoleh, variabel $Y$ dapat dihitung. Nilai $Y$ sesuai nilai setiap sample $X$ yang ada selanjutnya dirata-rata dan dihitung variannya ($\sigma$). Akan tetapi, untuk SRS, fungsi $P_m$ tidak digunakan. Nilai random ($r$) yang dihasilkan langsung menjadi masukan bagi fungsi inverse untuk mendapatkan nilai $X$.
 \end{enumerate}
 
 \subsection{Fungsi \textit{inverse} untuk mendapatkan nilai $X$}
@@ -439,7 +444,8 @@ Ketika LHS digunakan, perhitungan yang telah dijelaskan sebelumnya akan diulang 
   \end{center}
 \end{figure}
 
-\chapter{Penerapan}
+\chapter{Penerapan TRIAC}
+\label{sec:implementasitriac}
 \section{Pendahuluan}
 \label{sec:introPenerapan}
 TRIA \textit{Code} yang telah dijelaskan sebelumnya secara umum dapat dikelompokkan menjadi dua tugas utama, masing-masing adalah perhitungan di waktu irradiasi dan kecelakaan. Saat irradiasi, hubungan saling ketergantungan antar variabel adalah seperti Gambar \ref{fig:irradiasi}. Sedangkan saat kecelakaan, hubungannya adalah seperti pada Gambar \ref{fig:accident}.
@@ -764,7 +770,7 @@ Yang menarik adalah model yang dikembangkan oleh PANAMA di kondisi kecelakaan ya
 
 \chapter{Pengujian perhitungan TRIAC}
 \section{Pendahuluan}
-Pengujian dilakukan dengan membandingkan hasil perhitungan TRAIC dengan PANAMA untuk data \textit{file input} seperti dalam Lampiran \ref{lamp:inputExample}. Khusus untuk hasil PANAMA, hanya terdapat hasil plot kondisi pengujian yang terdapat dalam dokumen teknis \cite{report1} (Gambar \ref{fig:benchmark1}). Dari gambar tersebut, direkonstruksi titik-titik hubungan antara waktu (jam) di sumbu (x) terhadap $\phi_1$ di sumbu (y). Karena itu, hasil pengujian TRIAC akan sangat tergantung dengan ketelitian dalam merekonstruksi titik tersebut. 
+Pengujian dilakukan dengan membandingkan hasil perhitungan TRAIC dengan PANAMA untuk data \textit{file input} seperti dalam Lampiran \ref{lamp:inputExample}. Khusus untuk hasil PANAMA, hanya terdapat hasil plot kondisi pengujian yang terdapat dalam dokumen teknis \cite{report1} (Gambar \ref{fig:benchmark1}). Dari gambar tersebut, direkonstruksi titik-titik hubungan antara waktu (jam) di sumbu (x) terhadap $\phi_1$ di sumbu (y). Karena itu, hasil pengujian TRIAC akan sangat tergantung dengan ketelitian dalam merekonstruksi titik tersebut. Pengujian yang dilakukan telah disajikan dalam artikel \cite{triac}.
 
 \begin{figure}[h!]
   \begin{center}
@@ -789,6 +795,112 @@ Seperti ditunjukkan Gambar \ref{fig:benchmark1}, kondisi pengujian adalah sebaga
     \label{fig:compareinit}
   \end{center}
 \end{figure}
+
+\chapter{Penerapan modul \textit{sampling}}
+\section{Pendahuluan}
+\label{sec:introsampling}
+Modul sampling yang akan diintegrasikan dalam TRIAC memiliki struktur class seperti pada Gambar \ref{fig:samplingclass}. Setiap distribusi menerapkan perhitungannya masing-masing untuk mendapatkan variabel sampling. Sedangkan class \texttt{triacLHS} sebagai super class menangani semua layanan lain yang berlaku untuk semua distribusi.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=.75]{pics/samplingclass.png}
+    \caption{Keterkaitan antar class dalam modul \textit{sampling}}
+    \label{fig:samplingclass}
+  \end{center}
+\end{figure}
+
+Dengan struktur TRIAC yang telah dibangun sebelumnya (Bab \ref{sec:implementasitriac}), diperlukan alur eksekusi yang dapat mengintegrasikan keduanya seperti yang disajikan di Gambar \ref{fig:total}. Selanjutnya, agar dapat diterapkan diperlukan skenario eksekusi layanan antar class seperti yang ditunjukkan pada Gambar \ref{fig:sequence}. Dalam Gambar \ref{fig:sequence}, class \texttt{LHSCalculation} berperan sebagai antarmuka untuk memanfaatkan layanan yang disediakan modul \textit{sampling}. Melalui class \texttt{LHSCalculation}, argumen yang diberikan oleh pengguna seperti jumlah \textit{sample} yang dibutuhkan, jenis distribusi dan \textit{sampling}, layer triso mana saja yang perlu di-\textit{sampling} disampaikan ke modul \textit{sampling}. Class \texttt{LHSCalculation} juga menjadi perantara untuk \textit{sample} dihasilkan dan selanjutnya dikembalikan ke TRIAC.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=.75]{pics/sequencediagram.png}
+    \caption{Diagram \textit{sequence} eksekusi layanan antar class yang melibatkan modul \textit{sampling}}
+    \label{fig:sequence}
+  \end{center}
+\end{figure}
+
+Jenis data \texttt{string} yang terlihat dalam rangkaian eksekusi layanan di Gambar \ref{fig:sequence} adalah hasil transformasi kode sumber python oleh aplikasi UML modeler, Umbrello \footnote{\url{https://umbrello.kde.org/}}. Meskipun umumnya berupa list yang berisi informasi ketidakpastian pada lapisan triso. Informasi ketidakpastian yang akan digunakan dalam pengujian TRIAC dengan modul \textit{sampling} diberikan pada Tabel \ref{tab:uncertainty}. 
+
+Informasi terkait ketidakpastian tersebut dimasukkan ke TRIAC melalui \textit{file input} seperti pada Lampiran \ref{lamp:inputExample}, di bawah baris informasi ''Uncertainties in geometry and a number of samples:''. Untuk setiap layer, terdapat 3 nilai yang harus diberikan, masing-masing adalah nilai ketidakpastian, jenis distribusi serta standar deviasi ($\sigma$) jika jenis distribusi yang dipilih adalah normal. Jika jenis distribusi yang dipilih bukan normal, maka nilai $\sigma$ diisi dengan $0$. Demikian juga jika lapisan triso tertentu, atau bahkan semuanya, tidak dipertimbangkan ketidakpastiannya, di bagian itu diisi nilai $0$. Sementara nilai terakhir di barisan itu adalah jumlah \textit{sample}. Modul sampling ini menerapkan kebijakan untuk menggunakan jumlah \textit{sample} yang sama untuk semua layer triso.
+
+\begin{sidewaystable}[h]
+\caption{Nilai nominal dan ketidakpastiannya pada lapisan triso}
+\label{tab:uncertainty}
+  \begin{center}
+    \begin{tabular}{@{}cccccccccccccc@{}}\toprule[1.5pt]
+    %\hline
+     \multicolumn{2}{c}{OPyC} & \phantom{a} & \multicolumn{2}{c}{SiC} & \phantom{a} & \multicolumn{2}{c}{IPyC} & \phantom{a} & \multicolumn{2}{c}{Buffer} & \phantom{a} & \multicolumn{2}{c}{Kernel}\\ \cmidrule{1-2} \cmidrule{4-5} \cmidrule{7-8} \cmidrule{10-11} \cmidrule{13-14}
+     Nominal & Ketidakpastian && Nominal & Ketidakpastian && Nominal & Ketidakpastian && Nominal & Ketidakpastian && Nominal & Ketidakpastian\\ \midrule
+     $4.60^{-4}$ & $1.0^{-5}$ && $4.20^{-4}$ & $2.6^{-6}$ && $3.85^{-4}$ & $1.0^{-5}$ && $3.45^{-4}$ & $4.4^{-6}$ && $2.55^{-4}$ & $5.0^{-6}$\\
+       \bottomrule[1.5pt]
+    \end{tabular}
+  \end{center}
+\end{sidewaystable}
+
+Kembali ke Gambar \ref{fig:total}, penggunaan modul \textit{sampling} akan membuat perhitungan TRIAC melakukan perulangan sebanyak jumlah \textit{sample}. Tentunya setelah sample telah dihasilkan oleh modul \textit{sampling}. Karena ada sebanyak jumlah \textit{sample} kombinasi ketebalan lapisan triso, maka akan ada sebanyak itu pula hasil perhitungan fraksi gagal triso. Itu sebabnya, di akhir perhitungan yang dijelaskan dalam diagram aktifitas di Gambar \ref{fig:total} ada perhitungan rerata dan variance dari nilai fraksi gagal yang ada sebanyak jumlah \textit{sample}.
+\clearpage
+\section{Pembacaan \textit{file input}}
+\label{sec:inputlhs}
+Pembacaan informasi terkait ketidakpastian ketebalan lapisan triso dilakukan di kode yang sama seperti informasi lainnya (Listing \ref{InputData.py}). Seperti telah dijelaskan di Sub bab \ref{sec:introsampling}, setiap lapisan partikel triso akan memiliki 3 data, masing-masing adalah ketidakpastian, jenis distribusi \textit{sample} dan $\sigma$. Ketiga data tersebut kemudian disusun dalam 1 list. List berisi data ketidakpastian setiap layer selanjutnya digabungkan dengan data sejenis dari layer yang lain. Sedangkan jumlah \textit{sample} yang terlibat menjadi data yang terakhir yang disimpan dalam list utama yang diberi nama \texttt{uncertainties} (baris ke-63 di Listing \ref{InputData.py}).
+
+\section{Trigger ke modul \textit{sampling}}
+Seperti telah dijelaskan pada Gambar \ref{fig:sequence}, permintaan layanan pada modul \textit{sampling} dilakukan dari class \texttt{triac.py} (baris ke-224 dari Listing \ref{triac.py}). Terdapat 2 argumen yang harus disertakan saat melakukan inisiasi obyek \texttt{LHSCalculation}. Keduanya adalah data ketidakpastian yang diperoleh dari pembacaan \textit{file input} (sub bab \ref{sec:inputlhs}) serta informasi tentang apakah akan menggunakan metode \textit{sampling} LHS atau SRS.
+
+Argumen yang dilewatkan ke \texttt{LHSCalculation} akan dipecah dan dimasukkan ke variabel yang bersesuaian. Sebagai contoh, elemen pertama dari list \texttt{uncertainties} adalah data ketidakpastian dari lapisan OPyC. Demikian untuk selanjutnya. Kondisi ini dapat dilihat pada fungsi \texttt{\_\_init\_\_} pada \texttt{LHSCalculation} di Listing \ref{LHScalculation.py}. 
+
+Setelah inisiasi obyek \texttt{LHSCalculation}, \texttt{triac.py} selanjutnya memasukkan nilai nominal dari ketebalan seluruh lapisan triso. Proses ini dijelaskan dalam Gambar \ref{fig:sequence} sebagai pemanggilan fungsi ke-3,4,5,6 dan 7, masing-masing untuk lapisan OPyC, SiC, IPyC, buffer dan kernel. 
+
+Kemudian, jika distribusi yang dipilih adalah \textit{uniform} maka \texttt{LHSCalculation} harus memasukkan nilai minimum dan maksimum dari rentang ketidakpastian. \texttt{LHSCalculation} mengetahui apa yang harus dilakukan karena sebelumnya, \texttt{triac.py} menjalankan perintah \texttt{lhsCalculation} (baris ke-235 pada Listing \ref{triac.py}). Perintah tersebut akan menjalankan layanan yang tersedia di \texttt{LHSCalculation}, tepatnya layanan yang didefinisikan pada baris ke-93 pada Listing \ref{LHScalculation.py}. Di dalam layanan tersebutlah, ditentukan inisiasi obyek lhs, apakah dari clas \texttt{Uniform}, \texttt{Triangle} ataupun \texttt{Normal}. Setelah penentuan obyek tersebut, pemberian nilai awal dilakukan, yang dalam Gambar \ref{fig:sequence} dilakukan pada pemanggilan fungsi ke-9 dan 10. Setiap obyek distribusi akan memiliki nilai awal yang berbeda. Hal ini menyebabkan definisi dari layanan \texttt{lhsCalculation} cukup panjang untuk mengakomodasi semua opsi yang mungkin.
+
+Layanan terakhir yang pada Gambar \ref{fig:sequence} dijalankan oleh LHSCalculation adalah \texttt{generatePm}. Meskipun bernama sama, penerapannya berbeda-beda dari satu distribusi ke distribusi lainnya. Karena itu, penerapannya dilakukan di class distribusi. Hasil dari pemanggilan fungsi ini adalah \textit{sample} dengan kriteria jumlah dan distribusi seperti yang diinginkan. Setelah layanan tersebut selesai, obyek \texttt{triac} dapat menggunakan \textit{sample} tersebut untuk menghitung fraksi gagal triso. Selesainya layanan tersebut ditandai dengan pengambilan \textit{sample} oleh obyek \texttt{triac} dari \texttt{LHSCalculation}. Pengambilan sample tersebut dalam Gambar \ref{fig:sequence} direpresentasikan oleh pemanggilan fungsi ke-12 s/d 16.
+
+\chapter{Pengujian modul \textit{sampling}}
+\section{Pendahuluan}
+Pengujian modul sampling akan mengunakan data sejarah irradiasi dan kecelakaan yang sama dengan yang telah digunakan pada pengujian perhitungan utama TRIAC. Sedangkan data ketidakpastian adalah seperti Tabel \ref{tab:uncertainty}. Pengujian diawali dengan membuat sample dengan mengikuti distribusi tertentu. Dalam hal ini adalah distribusi \textit{uniform} dan triangular. Sedangkan modul untuk distribusi normal yang telah diimplementasikan masih menghasilkan pola yang berbeda dari yang seharusnya. Jika telah dapat terbentuk, maka pengunaannya akan sama seperti modul dengan distribusi \textit{uniform} dan triangular.
+
+\section{Hasil pengujian}
+Pengujian pertama adalah membentuk sample sehingga memiliki distribusi tertentu, baik menggunakan metode LHS dan SRS. Gambar \ref{fig:unifLHS} dan \ref{fig:unifSRS} menunjukkan \textit{sample} yang terbentuk mengikuti distribusi \textit{uniform}, dengan menggunakan metode LHS dan SRS. Sedangkan Gambar \ref{fig:triLHS} dan \ref{fig:triSRS} menunjukkan pola serupa dengan distribusi triangular. Terlihat bahwa metode LHS dapat membentuk sample yang jumlahnya terdistribusi dengan distribusi tertentu. Sedangkan SRS, cukup acak dalam distribusinya.
+
+\begin{figure}[h!]
+\begin{center}
+\subfigure[]{\label{fig:unifLHS}\includegraphics[width=130mm]{pics/LHS_Uniform_OPyC.png}}
+\subfigure[]{\label{fig:unifSRS}\includegraphics[width=130mm]{pics/SRS_Uniform_OPyC.png}}
+\caption{Distribusi \textit{sample} yang diperoleh menggunakan distribusi \textit{uniform} serta metode (a). LHS dan (b). SRS}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\subfigure[]{\label{fig:triLHS}\includegraphics[width=130mm]{pics/LHS_Triangle_OPyC.png}}
+\subfigure[]{\label{fig:triSRS}\includegraphics[width=130mm]{pics/SRS_Triangle_OPyC.png}}
+\caption{Distribusi \textit{sample} yang diperoleh menggunakan distribusi triangular serta metode (a). LHS dan (b). SRS}
+\end{center}
+\end{figure}
+
+Pengujian selanjutnya adalah untuk melihat dampak dari mempertimbangkan ketidakpastian pada setiap lapisan triso yang seragam dalam hal distribusi dan metode \textit{sampling}. Yang dimaksud dengan seragam tersebut adalah, jika skenario yang sedang dijalankan adalah menggunakan distribusi \textit{uniform} dengan metode sampling LHS, maka semua lapisan triso akan menggunakan distribusi dan metode \textit{sampling} yang sama. Kemudian, hasilnya akan disajikan dalam bentuk plot nilai rerata fraksi gagal dan penyimpangan bakunya ($\sigma$). Skenario ini seluruhnya dijalankan dengan menggunakan 100 \textit{sample}.
+
+Gambar \ref{fig:stdUnifLHS} dan \ref{fig:stdUnifSRS} menunjukkan pola fraksi gagal yang diperoleh dari \textit{sample} yang diperoleh menggunakan distribusi \textit{uniform}, baik dengan metode LHS maupun SRS. Sedangkan Gambar \ref{fig:stdTriLHS} dan \ref{fig:stdTriSRS} adalah hasil dari pengujian serupa menggunakan \textit{sample} yang terdistribusi triangular.
+\begin{figure}[h!]
+\begin{center}
+\subfigure[]{\label{fig:stdUnifLHS}\includegraphics[width=130mm]{pics/stdDevUniformLHS.png}}
+\subfigure[]{\label{fig:stdUnifSRS}\includegraphics[width=130mm]{pics/stdDevUniformSRS.png}}
+\caption{Nilai rerata dan $\sigma$ fraksi gagal partikel triso menggunakan metode $\sigma$  (a). LHS and (b). SRS dan distribusi \textit{uniform}}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\subfigure[]{\label{fig:stdTriLHS}\includegraphics[width=130mm]{pics/stdDevTriangleLHS.png}}
+\subfigure[]{\label{fig:stdTriSRS}\includegraphics[width=130mm]{pics/stdDevTriangleSRS.png}}
+\caption{Nilai rerata dan $\sigma$ fraksi gagal partikel triso menggunakan metode $\sigma$  (a). LHS and (b). SRS dan distribusi triangular}
+\end{center}
+\end{figure}
+
+Dari perspektif distribusi \textit{sample}, diketahui bahwa distribusi \textit{uniform} menghasilkan $\sigma$ yang lebih besar daripada triangular. Hal ini dapat dipahami ketika kita melihat Gambar \ref{fig:triLHS} dan \ref{fig:triSRS}. Pada gambar dengan distribusi triangular tersebut, \textit{sample} yang berukuran tidak jauh dari nilai rerata adalah \textit{sample} dengan jumlah yang mayoritas. Secara statistik hal ini disebut sebagai kondisi di mana variasi \textit{sample} rendah. Hal ini berkebalikan dengan distribusi \textit{uniform} yang \textit{sample} yang terbentuk terdistribusi cukup seragam dalam rentang ketidakpastian.
+
+Sedangkan dari perspektif metode sampling, LHS justru menghasilkan nilai $\sigma$ yang cenderung lebih besar daripada SRS. Hal ini dapat dipahami dari Gambar \ref{fig:unifLHS} dan \ref{fig:unifSRS}. Pada distribusi \textit{sample} yang diperoleh menggunakan SRS terdistribusi secara acak, sehingga ada rentang ketidakpastian yang tidak memiliki \textit{sample}. Kondisi seperti ini memungkinkan terjadinya efek saling menghilangkan variasi sehingga menghasilkan nilai $\sigma$ cenderung kecil.
+
+Hasil terkahir memang belum valid karena fraksi gagal diperoleh dengan mensimulasi ketidakpastian secara bersamaan di setiap lapisan triso. Masih perlu dievaluasi pengaruh ketidakpastian di setiap lapisan secara terpisah terhadap fraksi gagal triso.
 
 % Daftar Pustaka
 \bibliographystyle{IEEEtran}

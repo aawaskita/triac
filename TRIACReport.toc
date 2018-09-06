@@ -11,12 +11,12 @@
 \contentsline {subsection}{\numberline {2.6.1}Fraksi gagal akibat berkurangnya \textit {tensile strength}}{6}{subsection.2.6.1}
 \contentsline {subsection}{\numberline {2.6.2}Fraksi gagal bahan bakar akibat \textit {weight loss}}{8}{subsection.2.6.2}
 \contentsline {subsection}{\numberline {2.6.3}Pertumbuhan fraksi gagal}{9}{subsection.2.6.3}
-\contentsline {section}{\numberline {2.7}Simulasi LHS}{9}{section.2.7}
+\contentsline {section}{\numberline {2.7}Modul \textit {sampling}}{9}{section.2.7}
 \contentsline {subsection}{\numberline {2.7.1}Pendahuluan}{9}{subsection.2.7.1}
-\contentsline {subsection}{\numberline {2.7.2}Opsi distribusi}{9}{subsection.2.7.2}
+\contentsline {subsection}{\numberline {2.7.2}Opsi distribusi}{10}{subsection.2.7.2}
 \contentsline {subsection}{\numberline {2.7.3}Fungsi \textit {inverse} untuk mendapatkan nilai $X$}{11}{subsection.2.7.3}
 \contentsline {subsection}{\numberline {2.7.4}Alur eksekusi}{11}{subsection.2.7.4}
-\contentsline {chapter}{\numberline {3}Penerapan}{13}{chapter.3}
+\contentsline {chapter}{\numberline {3}Penerapan TRIAC}{13}{chapter.3}
 \contentsline {section}{\numberline {3.1}Pendahuluan}{13}{section.3.1}
 \contentsline {section}{\numberline {3.2}Pembacaan \textit {file input}}{14}{section.3.2}
 \contentsline {section}{\numberline {3.3}TRIAC Core}{16}{section.3.3}
@@ -24,9 +24,21 @@
 \contentsline {chapter}{\numberline {4}Pengujian perhitungan TRIAC}{23}{chapter.4}
 \contentsline {section}{\numberline {4.1}Pendahuluan}{23}{section.4.1}
 \contentsline {section}{\numberline {4.2}Hasil pengujian}{24}{section.4.2}
+\contentsline {chapter}{\numberline {5}Penerapan modul \textit {sampling}}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}Pendahuluan}{25}{section.5.1}
+\contentsline {section}{\numberline {5.2}Pembacaan \textit {file input}}{28}{section.5.2}
+\contentsline {section}{\numberline {5.3}Trigger ke modul \textit {sampling}}{28}{section.5.3}
+\contentsline {chapter}{\numberline {6}Pengujian modul \textit {sampling}}{29}{chapter.6}
+\contentsline {section}{\numberline {6.1}Pendahuluan}{29}{section.6.1}
+\contentsline {section}{\numberline {6.2}Hasil pengujian}{29}{section.6.2}
 \contentsline {chapter}{LAMPIRAN}{1}{section*.7}
 \contentsline {chapter}{Lampiran 1}{2}{section*.8}
 \contentsline {chapter}{Lampiran 2: InputData.py}{5}{section*.10}
-\contentsline {chapter}{Lampiran 3: interpolasi.py}{6}{section*.12}
-\contentsline {chapter}{Lampiran 4: core.py}{7}{section*.14}
-\contentsline {chapter}{Lampiran 5: triac.py}{10}{section*.16}
+\contentsline {chapter}{Lampiran 3: interpolasi.py}{8}{section*.12}
+\contentsline {chapter}{Lampiran 4: core.py}{9}{section*.14}
+\contentsline {chapter}{Lampiran 5: triac.py}{13}{section*.16}
+\contentsline {chapter}{Lampiran 6: LHScalculation.py}{21}{section*.18}
+\contentsline {chapter}{Lampiran 7: lhs.py}{28}{section*.20}
+\contentsline {chapter}{Lampiran 8: uniform.py}{31}{section*.22}
+\contentsline {chapter}{Lampiran 9: triangle.py}{33}{section*.24}
+\contentsline {chapter}{Lampiran 10: normal.py}{35}{section*.26}
